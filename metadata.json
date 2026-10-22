@@ -1,0 +1,6 @@
+{
+  "name": "MASH Clips AI — MASH Schron Muzyczny",
+  "description": "Profesjonalna produkcja teledysków łącząca prawdziwych artystów, technologię Green Screen i sztuczną inteligencję przy współpracy z Dream Studio Productions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
