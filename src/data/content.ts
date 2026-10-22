@@ -457,9 +457,9 @@ export const GENRE_DATA = [
     },
     accentColor: '#A855F7',
     sampleConcept: {
-      artist: 'Zero G Orchestra',
-      track: 'Singularity Monolith',
-      visual: 'Horyzont zdarzeń czarnej dziury pochłaniający świetliste wstęgi dźwięku wokół dyrygenta.',
+      artist: 'MASH Clips AI × Dream Studio',
+      track: 'Singularity (YouTube)',
+      visual: 'Monumentalna podróż przez zaginającą się czasoprzestrzeń i surrealistyczne wymiary, dostępna w oficjalnym wideo YouTube.',
     },
   },
 ];
@@ -488,6 +488,30 @@ export const PORTFOLIO_PROJECTS: ProjectConcept[] = [
     },
     techniques: ['Official Video (YouTube)', 'Green Screen Cyclorama 4K/6K', 'Generative AI Worldbuilding', 'Cinema Color Grading'],
     colorPalette: ['#080808', '#E5242A', '#F5F5F5', '#171717'],
+  },
+  {
+    id: 'project-singularity',
+    title: 'SINGULARITY — CINEMATIC ODYSSEY',
+    artist: 'MASH Clips AI × Dream Studio Productions',
+    genre: 'film-experimental',
+    genreLabel: { pl: 'Muzyka Filmowa & Awangardowa', en: 'Film Score & Experimental' },
+    year: '2026',
+    isDemoConcept: false,
+    thumbnail: 'https://img.youtube.com/vi/lyHS-_3CIhA/maxresdefault.jpg',
+    duration: '03:45',
+    bpm: 110,
+    youtubeId: 'lyHS-_3CIhA',
+    youtubeUrl: 'https://youtu.be/lyHS-_3CIhA',
+    synopsis: {
+      pl: 'Oficjalna produkcja filmowa MASH Clips AI: monumentalna podróż łącząca autentyczną ekspresję wykonawcy na planie Green Screen z zaginającą się czasoprzestrzenią, grawitacyjną geometrią i surrealistycznym światem AI.',
+      en: 'Official cinematic production by MASH Clips AI: a monumental journey fusing authentic green screen artist performance with warping spacetime geometry and surreal generative AI worlds.',
+    },
+    visualWorld: {
+      pl: 'Zaginanie czasoprzestrzeni, soczewkowanie grawitacyjne wokół monolitycznych struktur, złote linie cząsteczek i kinowe oświetlenie wolumetryczne.',
+      en: 'Spacetime curvature, gravitational lensing around monolithic geometries, golden particle flow, and cinematic volumetric lighting.',
+    },
+    techniques: ['Official Video (YouTube)', 'Green Screen 4K/6K', 'AI Spacetime Synthesis', 'Cinema ACES Color Grading'],
+    colorPalette: ['#050505', '#E5242A', '#8B5CF6', '#FAFAFA'],
   },
   {
     id: 'project-valhalla',
@@ -576,28 +600,6 @@ export const PORTFOLIO_PROJECTS: ProjectConcept[] = [
     },
     techniques: ['Fluid Motion AI Simulation', 'Subsurface Scattering Glow', 'Keyframe-matched Audio Reactivity', 'Film Noir Grading'],
     colorPalette: ['#030712', '#0284C7', '#065F46', '#F0FDFA'],
-  },
-  {
-    id: 'project-singularity',
-    title: 'SINGULARITY MONOLITH',
-    artist: 'Zero G Orchestra',
-    genre: 'film-experimental',
-    genreLabel: { pl: 'Muzyka Filmowa & Awangardowa', en: 'Film Score & Experimental' },
-    year: '2026',
-    isDemoConcept: true,
-    thumbnail: IMAGES.rawStudio,
-    duration: '06:05',
-    bpm: 110,
-    synopsis: {
-      pl: 'Eksperymentalny koncept łączący żywego dyrygenta i wokalistkę z dynamicznie zakrzywiającą się czasoprzestrzenią wokół horyzontu zdarzeń czarnej dziury.',
-      en: 'Experimental fusion of live conductor and soprano vocalist warping spacetime geometry as the climax approaches the event horizon.',
-    },
-    visualWorld: {
-      pl: 'Fraktale, złote linie grawitacji, soczewkowanie grawitacyjne i geometryczne struktury czwartego wymiaru.',
-      en: 'Gravitational lensing rings, relativistic light shifts, non-Euclidean obsidian solids, multidimensional echoes.',
-    },
-    techniques: ['Neural Dimension Synthesis', 'Optical Flow Warp', '32-bit Float EXR Pipeline', 'Custom LUT Development'],
-    colorPalette: ['#050505', '#E5242A', '#8B5CF6', '#FAFAFA'],
   },
 ];
 
