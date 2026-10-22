@@ -17,11 +17,18 @@ import { SITE_COPY } from '../data/content';
 interface ContactBriefSectionProps {
   currentLang: Language;
   preselectedPackage: string;
+  calculatorCalculation?: {
+    people: number;
+    seconds: number;
+    totalPrice: number;
+    summary: string;
+  } | null;
 }
 
 export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   currentLang,
   preselectedPackage,
+  calculatorCalculation,
 }) => {
   const copy = SITE_COPY[currentLang];
 
@@ -48,10 +55,21 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (preselectedPackage) {
+    if (calculatorCalculation) {
+      setFormData((prev) => ({
+        ...prev,
+        productionPackage: calculatorCalculation.summary,
+        estimatedBudget: `${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} PLN`,
+        conceptDescription: prev.conceptDescription
+          ? prev.conceptDescription
+          : currentLang === 'pl'
+          ? `[Kalkulacja z kalkulatora]: ${calculatorCalculation.people} os. na scenie (490 zł/os.) + ${calculatorCalculation.seconds}s wideo (20 zł/s) = ${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} zł netto.`
+          : `[Calculator Estimate]: ${calculatorCalculation.people} performer(s) on stage (490 PLN/ea) + ${calculatorCalculation.seconds}s video (20 PLN/s) = ${calculatorCalculation.totalPrice.toLocaleString('en-US')} PLN net.`,
+      }));
+    } else if (preselectedPackage) {
       setFormData((prev) => ({ ...prev, productionPackage: preselectedPackage }));
     }
-  }, [preselectedPackage]);
+  }, [preselectedPackage, calculatorCalculation, currentLang]);
 
   const validate = (): boolean => {
     const errs: Partial<Record<keyof BriefFormData, string>> = {};
@@ -313,6 +331,22 @@ ${submittedBrief.data.conceptDescription}
             ) : (
               /* Active Form */
               <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                {calculatorCalculation && (
+                  <div className="p-4 rounded-xl bg-[#E5242A]/10 border border-[#E5242A]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-white">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#E5242A] animate-pulse" />
+                      <span>
+                        {currentLang === 'pl'
+                          ? `Zastosowano kalkulację: ${calculatorCalculation.people} os. na scenie · ${calculatorCalculation.seconds}s (${Math.floor(calculatorCalculation.seconds / 60)}:${(calculatorCalculation.seconds % 60).toString().padStart(2, '0')} min)`
+                          : `Applied Calculation: ${calculatorCalculation.people} performer(s) · ${calculatorCalculation.seconds}s`}
+                      </span>
+                    </div>
+                    <div className="text-sm font-bold text-[#E5242A]">
+                      {calculatorCalculation.totalPrice.toLocaleString('pl-PL')} zł netto
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div className="space-y-1.5">
@@ -443,6 +477,12 @@ ${submittedBrief.data.conceptDescription}
                       onChange={(e) => setFormData({ ...formData, productionPackage: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
                     >
+                      {formData.productionPackage &&
+                        !['MASH AI MUSIC VIDEO', 'MASH GREEN SCREEN PRODUCTION', 'MASH AI VIDEO CONCEPT', 'MASH CINEMATIC EXPERIENCE', 'MASH VISUAL CONTENT', 'Inny projekt indywidualny'].includes(formData.productionPackage) && (
+                          <option value={formData.productionPackage}>
+                            {formData.productionPackage}
+                          </option>
+                        )}
                       <option value="MASH AI MUSIC VIDEO">MASH AI Music Video</option>
                       <option value="MASH GREEN SCREEN PRODUCTION">MASH Green Screen Production</option>
                       <option value="MASH AI VIDEO CONCEPT">MASH AI Video Concept</option>
@@ -462,6 +502,12 @@ ${submittedBrief.data.conceptDescription}
                       onChange={(e) => setFormData({ ...formData, estimatedBudget: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
                     >
+                      {formData.estimatedBudget &&
+                        !['', '5 000 - 10 000 PLN', '10 000 - 20 000 PLN', '20 000 - 40 000 PLN', '40 000+ PLN', 'Do uzgodnienia / elastyczny'].includes(formData.estimatedBudget) && (
+                          <option value={formData.estimatedBudget}>
+                            {formData.estimatedBudget} (Z kalkulatora)
+                          </option>
+                        )}
                       <option value="">Wybierz przedział (opcjonalnie)...</option>
                       <option value="5 000 - 10 000 PLN">5 000 – 10 000 PLN</option>
                       <option value="10 000 - 20 000 PLN">10 000 – 20 000 PLN</option>

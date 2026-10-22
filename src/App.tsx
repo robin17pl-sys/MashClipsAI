@@ -24,6 +24,12 @@ export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>('pl');
   const [selectedGenreFilter, setSelectedGenreFilter] = useState<MusicGenre>('all');
   const [preselectedPackage, setPreselectedPackage] = useState<string>('MASH AI MUSIC VIDEO');
+  const [calculatorCalculation, setCalculatorCalculation] = useState<{
+    people: number;
+    seconds: number;
+    totalPrice: number;
+    summary: string;
+  } | null>(null);
   const [heroShowreelOpen, setHeroShowreelOpen] = useState<boolean>(false);
 
   const handleToggleLang = () => {
@@ -37,8 +43,14 @@ export default function App() {
     }
   };
 
-  const handleSelectPackage = (packageName: string) => {
-    setPreselectedPackage(packageName);
+  const handleSelectCalculation = (calc: {
+    people: number;
+    seconds: number;
+    totalPrice: number;
+    summary: string;
+  }) => {
+    setCalculatorCalculation(calc);
+    setPreselectedPackage(calc.summary);
     const el = document.getElementById('brief');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -91,10 +103,10 @@ export default function App() {
         {/* Section 7: Współpraca z Dream Studio Productions */}
         <PartnershipSection currentLang={currentLang} />
 
-        {/* Section 8: Oferta (Pakiety) */}
+        {/* Section 8: Kalkulator Wyceny z suwakami */}
         <OfferSection
           currentLang={currentLang}
-          onSelectPackage={handleSelectPackage}
+          onSelectCalculation={handleSelectCalculation}
         />
 
         {/* Section 9: Dla Kogo Pracujemy */}
@@ -104,6 +116,7 @@ export default function App() {
         <ContactBriefSection
           currentLang={currentLang}
           preselectedPackage={preselectedPackage}
+          calculatorCalculation={calculatorCalculation}
         />
       </main>
 

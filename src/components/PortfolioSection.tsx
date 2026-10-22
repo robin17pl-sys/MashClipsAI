@@ -28,10 +28,17 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
     { id: 'film-experimental', label: { pl: 'Filmowa & Exp.', en: 'Film & Exp.' } },
   ];
 
-  const filteredProjects =
+  // The main official MASH Clip is featured prominently in the large showcase banner above.
+  // The grid below displays exactly 3 small project thumbnails as requested.
+  const secondaryProjects = PORTFOLIO_PROJECTS.slice(1);
+
+  const displayedProjects =
     selectedGenreFilter === 'all'
-      ? PORTFOLIO_PROJECTS
-      : PORTFOLIO_PROJECTS.filter((p) => p.genre === selectedGenreFilter);
+      ? secondaryProjects.slice(0, 3)
+      : (() => {
+          const matching = secondaryProjects.filter((p) => p.genre === selectedGenreFilter);
+          return matching.length > 0 ? matching.slice(0, 3) : secondaryProjects.slice(0, 3);
+        })();
 
   const handleOpenProject = (project: ProjectConcept) => {
     setActiveProject(project);
@@ -154,9 +161,9 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           );
         })()}
 
-        {/* Portfolio Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
+        {/* Portfolio Projects Grid - Exactly 3 Small Thumbnails below Main MASH Clip Banner */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {displayedProjects.map((project) => (
             <div
               key={project.id}
               onClick={() => handleOpenProject(project)}
