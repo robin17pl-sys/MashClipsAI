@@ -75,7 +75,15 @@ export default function App() {
         <HeroSection
           currentLang={currentLang}
           onOpenBrief={handleOpenBrief}
-          onOpenShowreel={() => setHeroShowreelOpen(true)}
+          onOpenShowreel={() => {
+            const cinemaEl = document.getElementById('portfolio-cinema');
+            if (cinemaEl) {
+              cinemaEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              const el = document.getElementById('portfolio');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
         />
 
         {/* Section 2: Poznaj MASH Clips AI */}
