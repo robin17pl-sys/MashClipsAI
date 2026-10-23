@@ -142,7 +142,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
                   <button
                     key={preset.count}
                     onClick={() => setPeople(preset.count)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    className={`min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer flex items-center justify-center ${
                       people === preset.count
                         ? 'bg-[#E5242A] text-white font-semibold'
                         : 'bg-[#181818] text-[#A5A5A5] hover:text-white hover:bg-[#222222] border border-[#2a2a2a]'
@@ -163,7 +163,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
             </div>
 
             {/* Slider 2: Czas trwania teledysku (20 zł / sekunda) */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#121212] border border-[#262626] space-y-5">
+            <div className="p-5 sm:p-8 rounded-2xl bg-[#121212] border border-[#262626] space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#E5242A]/10 border border-[#E5242A]/30 flex items-center justify-center text-[#E5242A]">
@@ -198,13 +198,13 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
                   step="5"
                   value={seconds}
                   onChange={(e) => setSeconds(Number(e.target.value))}
-                  className="w-full h-2 bg-[#222222] rounded-lg appearance-none cursor-pointer accent-[#E5242A]"
+                  className="w-full h-3 bg-[#222222] rounded-lg appearance-none cursor-pointer accent-[#E5242A]"
                   aria-label={copy.packages.secondsLabel}
                 />
                 <div className="flex justify-between text-[11px] font-mono text-[#666666]">
-                  <span>15 sek. (Teaser)</span>
-                  <span>180 sek. (3:00 min)</span>
-                  <span>300 sek. (5:00 min)</span>
+                  <span>15s (Teaser)</span>
+                  <span>180s (3:00)</span>
+                  <span>300s (5:00)</span>
                 </div>
               </div>
 
@@ -214,7 +214,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
                   <button
                     key={preset.secs}
                     onClick={() => setSeconds(preset.secs)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    className={`min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer flex items-center justify-center ${
                       seconds === preset.secs
                         ? 'bg-[#E5242A] text-white font-semibold'
                         : 'bg-[#181818] text-[#A5A5A5] hover:text-white hover:bg-[#222222] border border-[#2a2a2a]'
@@ -236,7 +236,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
           </div>
 
           {/* Right Column: Live Price Summary & Breakdown Card */}
-          <div className="lg:col-span-5 rounded-2xl bg-[#141414] border-2 border-[#E5242A] p-6 sm:p-8 space-y-6 shadow-2xl shadow-[#E5242A]/10 sticky top-28">
+          <div className="lg:col-span-5 rounded-2xl bg-[#141414] border-2 border-[#E5242A] p-5 sm:p-8 space-y-6 shadow-2xl shadow-[#E5242A]/10 lg:sticky lg:top-28">
             <div className="flex items-center justify-between border-b border-[#262626] pb-4">
               <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#E5242A]">
                 <Sparkles className="w-4 h-4" />

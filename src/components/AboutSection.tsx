@@ -39,8 +39,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ currentLang }) => {
           </p>
         </div>
 
-        {/* 4 Pillars Grid (Single-level depth, hairline borders, no thick left border slop) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 Pillars Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {copy.about.pillars.map((pillar, idx) => (
             <div
               key={idx}

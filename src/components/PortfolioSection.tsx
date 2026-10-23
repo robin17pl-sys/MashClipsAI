@@ -272,7 +272,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           ) : (
             /* Poster View with Direct In-Page Play Trigger */
             <div className="relative">
-              <div className="aspect-[21/9] sm:aspect-[2.4/1] w-full relative overflow-hidden">
+              <div className="aspect-[16/9] sm:aspect-[2/1] md:aspect-[2.4/1] w-full relative overflow-hidden">
                 <img
                   src={activeHeroProject.thumbnail}
                   alt={activeHeroProject.title}
@@ -287,17 +287,17 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                   className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
                 {/* Big Play Button in Center */}
                 <div
                   onClick={() => handlePlayHero(activeHeroProject, false)}
-                  className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer group"
+                  className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer group p-4"
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#E5242A]/90 group-hover:bg-[#E5242A] text-white flex items-center justify-center shadow-2xl transition-all group-hover:scale-110 mb-3">
-                    <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
+                  <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#E5242A]/90 group-hover:bg-[#E5242A] text-white flex items-center justify-center shadow-2xl transition-all group-hover:scale-110 mb-2 sm:mb-3">
+                    <Play className="w-6 h-6 sm:w-8 sm:h-8 fill-current ml-0.5 sm:ml-1" />
                   </div>
-                  <span className="px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-white text-xs sm:text-sm font-mono font-semibold tracking-wider uppercase group-hover:border-[#E5242A] transition-colors">
+                  <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/10 text-white text-[10px] sm:text-xs md:text-sm font-mono font-semibold tracking-wider uppercase group-hover:border-[#E5242A] transition-colors text-center max-w-[95%]">
                     {currentLang === 'pl'
                       ? '▶ ODTWÓRZ FILM NA STRONIE GŁÓWNEJ'
                       : '▶ PLAY VIDEO ON HOMEPAGE'}
@@ -305,9 +305,9 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                 </div>
 
                 {/* Poster Content Overlay */}
-                <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 pointer-events-none">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#E5242A]">
+                <div className="absolute bottom-3 sm:bottom-6 left-3 sm:left-6 right-3 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 pointer-events-none">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-[#E5242A]">
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>
                         {activeHeroProject.id === 'project-promo-official'
@@ -317,18 +317,15 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                           : activeHeroProject.genreLabel[currentLang]}
                       </span>
                     </div>
-                    <h3 className="text-xl sm:text-3xl font-extrabold uppercase font-display text-white tracking-tight">
+                    <h3 className="text-lg sm:text-2xl md:text-3xl font-extrabold uppercase font-display text-white tracking-tight">
                       {activeHeroProject.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#A5A5A5] max-w-xl line-clamp-1">
-                      {activeHeroProject.synopsis[currentLang]}
-                    </p>
                   </div>
 
-                  <div className="flex items-center gap-3 text-xs font-mono text-white/90 shrink-0 pointer-events-auto">
+                  <div className="flex items-center gap-2 sm:gap-3 text-xs font-mono text-white/90 shrink-0 pointer-events-auto">
                     <button
                       onClick={() => handlePlayHero(activeHeroProject, true)}
-                      className="px-3.5 py-2 rounded-lg bg-black/70 hover:bg-black text-white border border-white/20 hover:border-[#E5242A] font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg"
+                      className="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-black/70 hover:bg-black text-white border border-white/20 hover:border-[#E5242A] font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg text-[11px] sm:text-xs"
                       title={currentLang === 'pl' ? 'Odtwórz od razu w pełnym ekranie' : 'Play immediately in full screen'}
                     >
                       <Maximize2 className="w-3.5 h-3.5 text-[#E5242A]" />
@@ -337,7 +334,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
 
                     <button
                       onClick={() => handlePlayHero(activeHeroProject, false)}
-                      className="px-4 py-2 rounded-lg bg-[#E5242A] hover:bg-[#c91d22] text-white font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg"
+                      className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-[#E5242A] hover:bg-[#c91d22] text-white font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg text-[11px] sm:text-xs"
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
                       <span>{currentLang === 'pl' ? 'Odtwórz wideo' : 'Play video'}</span>
@@ -349,8 +346,8 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
           )}
         </div>
 
-        {/* Portfolio Projects Grid - Exactly 3 Thumbnails below Main Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Portfolio Projects Grid - Responsive for mobile, tablet and desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {displayedProjects.map((project) => {
             const isCardPlaying = playingCardId === project.id;
 

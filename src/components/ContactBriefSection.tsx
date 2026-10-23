@@ -382,7 +382,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   {/* Full Name */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
@@ -393,7 +393,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       placeholder={copy.contact.form.fullNamePlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                         errors.fullName ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                       }`}
                     />
@@ -415,7 +415,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder={copy.contact.form.emailPlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                         errors.email ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                       }`}
                     />
@@ -428,7 +428,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   {/* Artist / Band Name */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
@@ -439,7 +439,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                       value={formData.artistName}
                       onChange={(e) => setFormData({ ...formData, artistName: e.target.value })}
                       placeholder={copy.contact.form.artistNamePlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                         errors.artistName ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                       }`}
                     />
@@ -461,7 +461,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                       value={formData.genre}
                       onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                       placeholder={copy.contact.form.genrePlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                         errors.genre ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                       }`}
                     />
@@ -476,7 +476,7 @@ Adres docelowy: dreamstudiopl@gmail.com
 
                 {/* Track Link / Demo Link */}
                 <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
                       {copy.contact.form.demoLink} <span className="text-[#E5242A]">*</span>
                     </label>
@@ -489,7 +489,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                     value={formData.demoLink}
                     onChange={(e) => setFormData({ ...formData, demoLink: e.target.value })}
                     placeholder={copy.contact.form.demoLinkPlaceholder}
-                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                       errors.demoLink ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                     }`}
                   />
@@ -510,7 +510,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                     <select
                       value={formData.productionPackage}
                       onChange={(e) => setFormData({ ...formData, productionPackage: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
+                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
                     >
                       {formData.productionPackage &&
                         !['MASH AI MUSIC VIDEO', 'MASH GREEN SCREEN PRODUCTION', 'MASH AI VIDEO CONCEPT', 'MASH CINEMATIC EXPERIENCE', 'MASH VISUAL CONTENT', 'Inny projekt indywidualny'].includes(formData.productionPackage) && (
@@ -535,7 +535,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                     <select
                       value={formData.estimatedBudget}
                       onChange={(e) => setFormData({ ...formData, estimatedBudget: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
+                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
                     >
                       {formData.estimatedBudget &&
                         !['', '5 000 - 10 000 PLN', '10 000 - 20 000 PLN', '20 000 - 40 000 PLN', '40 000+ PLN', 'Do uzgodnienia / elastyczny'].includes(formData.estimatedBudget) && (
@@ -562,9 +562,8 @@ Adres docelowy: dreamstudiopl@gmail.com
                       value={formData.targetDeadline}
                       onChange={(e) => setFormData({ ...formData, targetDeadline: e.target.value })}
                       placeholder={copy.contact.form.targetDeadlinePlaceholder}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-sm text-white placeholder-[#555555] focus:outline-none focus:border-[#555555] transition-colors"
-                    >
-                    </input>
+                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none focus:border-[#555555] transition-colors"
+                    />
                   </div>
                 </div>
 
@@ -578,7 +577,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                     value={formData.conceptDescription}
                     onChange={(e) => setFormData({ ...formData, conceptDescription: e.target.value })}
                     placeholder={copy.contact.form.conceptPlaceholder}
-                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
                       errors.conceptDescription ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
                     }`}
                   />
@@ -590,14 +589,14 @@ Adres docelowy: dreamstudiopl@gmail.com
                   )}
                 </div>
 
-                {/* Privacy Policy Consent Checkbox */}
-                <div className="space-y-1.5 pt-2">
-                  <label className="flex items-start gap-3 cursor-pointer select-none">
+                {/* Privacy Policy Consent Checkbox - Touch Friendly Box */}
+                <div className="space-y-1.5 pt-1">
+                  <label className="p-3.5 rounded-xl bg-[#151515] border border-[#242424] flex items-start gap-3 cursor-pointer hover:border-[#383838] transition-colors select-none">
                     <input
                       type="checkbox"
                       checked={formData.acceptedPrivacy}
                       onChange={(e) => setFormData({ ...formData, acceptedPrivacy: e.target.checked })}
-                      className="mt-1 h-4 w-4 rounded bg-[#181818] border-[#333333] text-[#E5242A] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                      className="mt-0.5 h-4 w-4 rounded bg-[#1f1f1f] border-[#383838] text-[#E5242A] focus:ring-0 focus:ring-offset-0 cursor-pointer shrink-0"
                     />
                     <span className="text-xs text-[#A5A5A5] leading-relaxed">
                       {copy.contact.form.privacyConsent}
@@ -612,11 +611,11 @@ Adres docelowy: dreamstudiopl@gmail.com
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4 space-y-2">
+                <div className="pt-3 space-y-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-8 py-3.5 bg-[#E5242A] hover:bg-[#c91d22] disabled:opacity-50 text-white font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-lg shadow-[#E5242A]/20 flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-4 sm:py-3.5 bg-[#E5242A] hover:bg-[#c91d22] disabled:opacity-50 text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-[#E5242A]/20 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>
                       {isSubmitting ? copy.contact.form.submitting : copy.contact.form.submitBtn}
@@ -624,7 +623,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                     <Send className="w-4 h-4" />
                   </button>
                   <p className="text-[11px] text-[#888888] font-mono flex items-center gap-1.5 pt-1">
-                    <Mail className="w-3.5 h-3.5 text-[#E5242A]" />
+                    <Mail className="w-3.5 h-3.5 text-[#E5242A] shrink-0" />
                     <span>
                       {currentLang === 'pl'
                         ? 'Formularz zostanie przekierowany bezpośrednio na mail: '
@@ -690,20 +689,23 @@ Adres docelowy: dreamstudiopl@gmail.com
                 </div>
 
                 <div className="flex items-start gap-3 pt-3 border-t border-[#1f1f1f]">
-                  <Phone className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
-                  <div className="space-y-2.5 w-full">
+                  <Phone className="w-4 h-4 text-[#E5242A] shrink-0 mt-1" />
+                  <div className="space-y-2 w-full">
                     <span className="text-[#777777] block text-[11px] uppercase tracking-wider">{copy.contact.directContact.phoneLabel}</span>
-                    {copy.contact.directContact.phones.map((p, idx) => (
-                      <div key={idx} className="space-y-0.5">
-                        <span className="text-[#999999] block text-[11px]">{p.name}</span>
+                    <div className="grid grid-cols-1 gap-2 pt-0.5">
+                      {copy.contact.directContact.phones.map((p, idx) => (
                         <a
+                          key={idx}
                           href={p.href}
-                          className="text-white font-semibold hover:text-[#E5242A] transition-colors inline-block"
+                          className="p-2.5 rounded-lg bg-[#181818] border border-[#262626] hover:border-[#E5242A] hover:bg-[#1e1e1e] transition-all block group min-h-[44px]"
                         >
-                          {p.number}
+                          <span className="text-[#888888] block text-[10px] font-mono">{p.name}</span>
+                          <span className="text-white font-bold group-hover:text-[#E5242A] transition-colors text-xs sm:text-sm block">
+                            {p.number}
+                          </span>
                         </a>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

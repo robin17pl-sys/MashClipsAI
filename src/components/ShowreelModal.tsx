@@ -43,28 +43,28 @@ export const ShowreelModal: React.FC<ShowreelModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/90 backdrop-blur-xl animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className="relative w-full max-w-5xl rounded-2xl bg-[#0f0f0f] border border-[#2a2a2a] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-5xl rounded-2xl bg-[#0f0f0f] border border-[#2a2a2a] shadow-2xl overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[92vh]">
         {/* Modal Top Bar */}
-        <div className="px-6 py-4 bg-[#141414] border-b border-[#222222] flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#E5242A]" />
-            <span className="text-xs font-mono uppercase tracking-wider text-[#A5A5A5]">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[#141414] border-b border-[#222222] flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#E5242A] shrink-0" />
+            <span className="text-xs font-mono uppercase tracking-wider text-[#A5A5A5] truncate">
               MASH Player · {project.genreLabel[currentLang]}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {project.youtubeUrl && (
               <a
                 href={project.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1 rounded bg-[#E5242A]/20 hover:bg-[#E5242A] text-[#E5242A] hover:text-white border border-[#E5242A]/40 text-xs font-mono transition-colors flex items-center gap-1.5"
+                className="min-h-[36px] px-2.5 sm:px-3 py-1 rounded-lg bg-[#E5242A]/20 hover:bg-[#E5242A] text-[#E5242A] hover:text-white border border-[#E5242A]/40 text-xs font-mono transition-colors flex items-center gap-1.5"
               >
                 <span>YouTube</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -73,7 +73,7 @@ export const ShowreelModal: React.FC<ShowreelModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-[#222222] text-[#A5A5A5] hover:text-white hover:bg-[#333333] transition-colors cursor-pointer"
+              className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg bg-[#222222] text-[#A5A5A5] hover:text-white hover:bg-[#333333] transition-colors cursor-pointer"
               aria-label={copy.portfolio.modalClose}
             >
               <X className="w-5 h-5" />

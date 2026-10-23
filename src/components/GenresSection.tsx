@@ -34,11 +34,11 @@ export const GenresSection: React.FC<GenresSectionProps> = ({ currentLang }) => 
         </div>
 
         {/* Clean Genre Cards - Same gatunki, bez opisów i szczegółów */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {GENRE_DATA.map((genre) => (
             <div
               key={genre.id}
-              className="group p-5 sm:p-6 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#E5242A]/60 hover:bg-[#151515] transition-all flex flex-col justify-between min-h-[110px]"
+              className="group p-4 sm:p-5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#E5242A]/60 hover:bg-[#151515] transition-all flex flex-col justify-between min-h-[96px] sm:min-h-[110px]"
             >
               <div className="flex items-center justify-between mb-3">
                 <div

@@ -36,21 +36,21 @@ export const PipelineSection: React.FC<PipelineSectionProps> = ({ currentLang })
         </div>
 
         {/* 5-Stage Interactive Step Selector */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3 mb-8 sm:mb-10">
           {PIPELINE_STAGES.map((stage) => {
             const isSelected = stage.id === selectedStageId;
             return (
               <button
                 key={stage.id}
                 onClick={() => setSelectedStageId(stage.id)}
-                className={`p-4 rounded-xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-3.5 sm:p-4 rounded-xl text-left border transition-all cursor-pointer flex flex-col justify-between last:col-span-2 sm:last:col-span-1 md:last:col-span-1 min-h-[96px] sm:min-h-[110px] ${
                   isSelected
                     ? 'bg-[#181818] border-[#E5242A] shadow-md shadow-[#E5242A]/10'
                     : 'bg-[#101010] border-[#222222] hover:bg-[#141414] hover:border-[#333333]'
                 }`}
               >
                 <div>
-                  <div className="text-xs font-mono text-[#E5242A] mb-1 font-bold">
+                  <div className="text-[11px] sm:text-xs font-mono text-[#E5242A] mb-1 font-bold">
                     STAGE {stage.number}
                   </div>
                   <h3 className="text-xs sm:text-sm font-bold text-white font-display uppercase tracking-tight line-clamp-2">
@@ -58,8 +58,8 @@ export const PipelineSection: React.FC<PipelineSectionProps> = ({ currentLang })
                   </h3>
                 </div>
 
-                <div className="mt-4 pt-2 border-t border-[#1f1f1f] text-[11px] font-mono text-[#777777] flex items-center justify-between">
-                  <span>{isSelected ? 'Wybrany' : 'Etap'}</span>
+                <div className="mt-3 sm:mt-4 pt-2 border-t border-[#1f1f1f] text-[10px] sm:text-[11px] font-mono text-[#777777] flex items-center justify-between">
+                  <span>{isSelected ? (currentLang === 'pl' ? 'Wybrany' : 'Selected') : (currentLang === 'pl' ? 'Etap' : 'Stage')}</span>
                   {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#E5242A]" />}
                 </div>
               </button>
@@ -68,7 +68,7 @@ export const PipelineSection: React.FC<PipelineSectionProps> = ({ currentLang })
         </div>
 
         {/* Deep-Dive Stage Display Box */}
-        <div className="rounded-2xl bg-[#121212] border border-[#262626] p-8 lg:p-10">
+        <div className="rounded-2xl bg-[#121212] border border-[#262626] p-5 sm:p-8 lg:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Stage description */}
             <div className="lg:col-span-7 space-y-6">

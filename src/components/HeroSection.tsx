@@ -60,22 +60,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Master Headline */}
           <h1
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.08] text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.12] sm:leading-[1.08] text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] break-words"
             style={{ textWrap: 'balance' }}
           >
             {copy.hero.headline}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg lg:text-xl text-[#F5F5F5] font-normal leading-relaxed max-w-2xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+          <p className="text-sm sm:text-base lg:text-xl text-[#F5F5F5] font-normal leading-relaxed max-w-2xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
             {copy.hero.subheadline}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* CTA Buttons - Full width on phone, row on tablet/desktop */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
             <button
               onClick={onOpenBrief}
-              className="px-6 py-3.5 bg-[#E5242A] hover:bg-[#c91d22] text-white font-semibold text-sm uppercase tracking-wider rounded-lg transition-all shadow-xl shadow-[#E5242A]/30 hover:shadow-[#E5242A]/50 flex items-center gap-2 group cursor-pointer"
+              className="w-full sm:w-auto px-6 py-4 sm:py-3.5 bg-[#E5242A] hover:bg-[#c91d22] text-white font-semibold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-xl shadow-[#E5242A]/30 hover:shadow-[#E5242A]/50 flex items-center justify-center gap-2 group cursor-pointer"
             >
               <span>{copy.hero.ctaPrimary}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -83,7 +83,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             <button
               onClick={onOpenShowreel}
-              className="px-6 py-3.5 bg-[#171717]/90 hover:bg-[#222222] text-[#F5F5F5] hover:text-white font-medium text-sm rounded-lg border border-[#444444] hover:border-[#666666] backdrop-blur-md transition-all shadow-lg flex items-center gap-2.5 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-4 sm:py-3.5 bg-[#171717]/90 hover:bg-[#222222] text-[#F5F5F5] hover:text-white font-medium text-xs sm:text-sm rounded-lg border border-[#444444] hover:border-[#666666] backdrop-blur-md transition-all shadow-lg flex items-center justify-center gap-2.5 cursor-pointer"
             >
               <div className="w-6 h-6 rounded-full bg-[#E5242A]/20 flex items-center justify-center text-[#E5242A]">
                 <Play className="w-3 h-3 fill-current ml-0.5" />
@@ -95,14 +95,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Full-width Studio Metrics Strip below Hero */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl bg-[#121212]/80 border border-[#222222] backdrop-blur-md">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-8 sm:pt-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 rounded-xl bg-[#121212]/85 border border-[#222222] backdrop-blur-md">
           {copy.hero.stats.map((stat, i) => (
-            <div key={i} className="flex flex-col border-l border-[#262626] pl-4 first:border-l-0">
-              <span className="text-[11px] uppercase tracking-wider text-[#A5A5A5] font-mono">
+            <div
+              key={i}
+              className="flex flex-col border-l border-[#262626] pl-3 sm:pl-4 odd:border-l-0 md:odd:border-l md:first:border-l-0"
+            >
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#A5A5A5] font-mono">
                 {stat.label}
               </span>
-              <span className="text-sm sm:text-base font-bold text-white font-display mt-0.5">
+              <span className="text-xs sm:text-sm md:text-base font-bold text-white font-display mt-0.5">
                 {stat.value}
               </span>
             </div>
