@@ -140,10 +140,22 @@ export const Footer: React.FC<FooterProps> = ({ currentLang }) => {
               Kontakt
             </span>
             <div className="space-y-2 text-[#cccccc]">
-              <div>kontakt@mashclips.ai</div>
-              <div>schron@mashmuzyka.pl</div>
+              <div>
+                <a href="mailto:DreamStudiopl@gmail.com" className="hover:text-white transition-colors">
+                  DreamStudiopl@gmail.com
+                </a>
+              </div>
+              <div>
+                <a href="tel:+48500184999" className="hover:text-white transition-colors">
+                  +48 500 184 999
+                </a>
+                <span className="text-[#666666] mx-1">/</span>
+                <a href="tel:+48501333061" className="hover:text-white transition-colors">
+                  +48 501 333 061
+                </a>
+              </div>
               <div className="text-[#888888]">MASH Schron Muzyczny</div>
-              <div className="text-[#888888]">& Dream Studio Productions</div>
+              <div className="text-[#888888]">Wojska Polskiego 3, 41-400 Mysłowice</div>
             </div>
           </div>
         </div>
@@ -209,7 +221,7 @@ export const Footer: React.FC<FooterProps> = ({ currentLang }) => {
                 <strong>4. Wykorzystanie sztucznej inteligencji:</strong> Modele AI stosowane przez MASH Clips AI służą wyłącznie jako narzędzie kreacji scenografii i postprodukcji wideo. Modele nie trenują na utworach muzycznych klientów.
               </p>
               <p>
-                <strong>5. Twoje prawa:</strong> Masz prawo wglądu do swoich danych, ich poprawiania, żądania usunięcia oraz cofnięcia zgody w dowolnym momencie pisząc na adres kontakt@mashclips.ai.
+                <strong>5. Twoje prawa:</strong> Masz prawo wglądu do swoich danych, ich poprawiania, żądania usunięcia oraz cofnięcia zgody w dowolnym momencie pisząc na adres DreamStudiopl@gmail.com.
               </p>
             </div>
 

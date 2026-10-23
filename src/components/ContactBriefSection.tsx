@@ -6,9 +6,9 @@ import {
   Mail,
   MapPin,
   Clock,
+  Phone,
   Copy,
   Download,
-  ExternalLink,
   RotateCcw,
 } from 'lucide-react';
 import { Language, BriefFormData } from '../types';
@@ -202,7 +202,7 @@ Opis wizji i pomysłu:
 ${submittedBrief.data.conceptDescription}
     `.trim());
 
-    window.location.href = `mailto:kontakt@mashclips.ai?cc=schron@mashmuzyka.pl&subject=${subject}&body=${body}`;
+    window.location.href = `mailto:DreamStudiopl@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleResetForm = () => {
@@ -604,9 +604,9 @@ ${submittedBrief.data.conceptDescription}
                 <div className="flex items-start gap-3">
                   <Mail className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[#777777] block text-[11px]">E-mail produkcyjny:</span>
+                    <span className="text-[#777777] block text-[11px]">{copy.contact.directContact.emailLabel}</span>
                     <a
-                      href="mailto:kontakt@mashclips.ai"
+                      href={`mailto:${copy.contact.directContact.email}`}
                       className="text-white hover:text-[#E5242A] transition-colors"
                     >
                       {copy.contact.directContact.email}
@@ -615,24 +615,20 @@ ${submittedBrief.data.conceptDescription}
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-[#777777] block text-[11px]">MASH Schron Muzyczny:</span>
-                    <a
-                      href="mailto:schron@mashmuzyka.pl"
-                      className="text-white hover:text-[#E5242A] transition-colors"
-                    >
-                      {copy.contact.directContact.schronEmail}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-[#777777] block text-[11px]">Studio & Soundstage:</span>
-                    <span className="text-white">
-                      {copy.contact.directContact.location}
+                  <div className="space-y-0.5">
+                    <span className="text-[#777777] block text-[11px]">{copy.contact.directContact.stageLabel}</span>
+                    <span className="text-white font-medium block">
+                      {copy.contact.directContact.stageName}
+                    </span>
+                    <span className="text-[#b0b0b0] block">
+                      {copy.contact.directContact.addressStreet}
+                    </span>
+                    <span className="text-[#b0b0b0] block">
+                      {copy.contact.directContact.addressCity}
+                    </span>
+                    <span className="text-[#888888] block text-[11px]">
+                      {copy.contact.directContact.addressCountry}
                     </span>
                   </div>
                 </div>
@@ -640,10 +636,28 @@ ${submittedBrief.data.conceptDescription}
                 <div className="flex items-start gap-3">
                   <Clock className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[#777777] block text-[11px]">Godziny pracy studia:</span>
+                    <span className="text-[#777777] block text-[11px]">{copy.contact.directContact.hoursLabel}</span>
                     <span className="text-white">
                       {copy.contact.directContact.hours}
                     </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 pt-3 border-t border-[#1f1f1f]">
+                  <Phone className="w-4 h-4 text-[#E5242A] shrink-0 mt-0.5" />
+                  <div className="space-y-2.5 w-full">
+                    <span className="text-[#777777] block text-[11px] uppercase tracking-wider">{copy.contact.directContact.phoneLabel}</span>
+                    {copy.contact.directContact.phones.map((p, idx) => (
+                      <div key={idx} className="space-y-0.5">
+                        <span className="text-[#999999] block text-[11px]">{p.name}</span>
+                        <a
+                          href={p.href}
+                          className="text-white font-semibold hover:text-[#E5242A] transition-colors inline-block"
+                        >
+                          {p.number}
+                        </a>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -653,41 +667,6 @@ ${submittedBrief.data.conceptDescription}
               </div>
             </div>
 
-            {/* Quick Links & Socials */}
-            <div className="rounded-2xl bg-[#121212] border border-[#262626] p-6 space-y-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#A5A5A5] block">
-                Kanały wideo i platformy
-              </span>
-              <div className="flex flex-col space-y-2 text-xs font-mono">
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#cccccc] hover:text-white transition-colors flex items-center justify-between py-1"
-                >
-                  <span>YouTube / @MASHClipsAI</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#777777]" />
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#cccccc] hover:text-white transition-colors flex items-center justify-between py-1"
-                >
-                  <span>Instagram / @mashclips.ai</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#777777]" />
-                </a>
-                <a
-                  href="https://spotify.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#cccccc] hover:text-white transition-colors flex items-center justify-between py-1"
-                >
-                  <span>Spotify Canvas Network</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#777777]" />
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
