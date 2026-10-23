@@ -3,12 +3,14 @@ import heroImg from '../assets/images/hero_greenscreen_ai_1792659959456.jpg';
 import rawStudioImg from '../assets/images/greenscreen_raw_studio_1792659959653.jpg';
 import aiFinalImg from '../assets/images/greenscreen_ai_final_1792659961299.jpg';
 import productionStageImg from '../assets/images/studio_production_stage_1792659960829.jpg';
+import genresBackdropImg from '../assets/images/genres_backdrop_1792745991969.jpg';
 
 export const IMAGES = {
   hero: heroImg,
   rawStudio: rawStudioImg,
   aiFinal: aiFinalImg,
   productionStage: productionStageImg,
+  genresBackdrop: genresBackdropImg,
 };
 
 export const SITE_COPY = {
