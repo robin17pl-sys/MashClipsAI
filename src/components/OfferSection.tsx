@@ -20,9 +20,9 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
   const [people, setPeople] = useState<number>(1);
   const [seconds, setSeconds] = useState<number>(180);
 
-  // Pricing constants specified by user: 490 zł per person, 20 zł per second
-  const PRICE_PER_PERSON = 490;
-  const PRICE_PER_SECOND = 20;
+  // Pricing constants specified by user: 440 zł per person, 15 zł per second
+  const PRICE_PER_PERSON = 440;
+  const PRICE_PER_SECOND = 15;
 
   const peopleCost = people * PRICE_PER_PERSON;
   const secondsCost = seconds * PRICE_PER_SECOND;
@@ -90,7 +90,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: The 2 Sliders */}
           <div className="lg:col-span-7 space-y-8">
-            {/* Slider 1: Liczba osób na scenie (490 zł / osoba) */}
+            {/* Slider 1: Liczba osób na scenie (440 zł / osoba) */}
             <div className="p-6 sm:p-8 rounded-2xl bg-[#121212] border border-[#262626] space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
@@ -162,7 +162,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
               </div>
             </div>
 
-            {/* Slider 2: Czas trwania teledysku (20 zł / sekunda) */}
+            {/* Slider 2: Czas trwania teledysku (15 zł / sekunda) */}
             <div className="p-5 sm:p-8 rounded-2xl bg-[#121212] border border-[#262626] space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
@@ -250,12 +250,20 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ currentLang, onSelec
             {/* Itemized Calculation */}
             <div className="space-y-3 font-mono text-xs">
               <div className="flex items-center justify-between text-[#cccccc] pb-2 border-b border-[#222222]">
-                <span>Wykonawcy ({people} os. × 490 zł):</span>
+                <span>
+                  {currentLang === 'pl'
+                    ? `Wykonawcy (${people} os. × ${PRICE_PER_PERSON} zł):`
+                    : `Performers (${people} × ${PRICE_PER_PERSON} PLN):`}
+                </span>
                 <span className="font-bold text-white">{peopleCost.toLocaleString('pl-PL')} zł</span>
               </div>
 
               <div className="flex items-center justify-between text-[#cccccc] pb-2 border-b border-[#222222]">
-                <span>Długość wideo ({seconds}s × 20 zł):</span>
+                <span>
+                  {currentLang === 'pl'
+                    ? `Długość wideo (${seconds}s × ${PRICE_PER_SECOND} zł):`
+                    : `Video duration (${seconds}s × ${PRICE_PER_SECOND} PLN):`}
+                </span>
                 <span className="font-bold text-white">{secondsCost.toLocaleString('pl-PL')} zł</span>
               </div>
 

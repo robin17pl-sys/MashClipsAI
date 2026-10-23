@@ -61,8 +61,8 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
         conceptDescription: prev.conceptDescription
           ? prev.conceptDescription
           : currentLang === 'pl'
-          ? `[Kalkulacja z kalkulatora]: ${calculatorCalculation.people} os. na scenie (490 zł/os.) + ${calculatorCalculation.seconds}s wideo (20 zł/s) = ${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} zł netto.`
-          : `[Calculator Estimate]: ${calculatorCalculation.people} performer(s) on stage (490 PLN/ea) + ${calculatorCalculation.seconds}s video (20 PLN/s) = ${calculatorCalculation.totalPrice.toLocaleString('en-US')} PLN net.`,
+          ? `[Kalkulacja z kalkulatora]: ${calculatorCalculation.people} os. na scenie (440 zł/os.) + ${calculatorCalculation.seconds}s wideo (15 zł/s) = ${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} zł netto.`
+          : `[Calculator Estimate]: ${calculatorCalculation.people} performer(s) on stage (440 PLN/ea) + ${calculatorCalculation.seconds}s video (15 PLN/s) = ${calculatorCalculation.totalPrice.toLocaleString('en-US')} PLN net.`,
       }));
     }
   }, [calculatorCalculation, currentLang]);
