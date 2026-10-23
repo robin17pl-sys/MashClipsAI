@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Language } from '../types';
 import { SITE_COPY } from '../data/content';
-import { audioAtmosphere } from '../utils/audioAtmosphere';
 
 interface HeaderProps {
   currentLang: Language;
@@ -11,14 +10,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentLang, onToggleLang, onOpenBrief }) => {
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const copy = SITE_COPY[currentLang];
-
-  const handleToggleAudio = () => {
-    const playing = audioAtmosphere.toggle();
-    setIsAudioPlaying(playing);
-  };
 
   const handleNavClick = (id: string) => {
     setMobileMenuOpen(false);
@@ -92,23 +85,6 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, onToggleLang, onOpe
 
         {/* Zone 3: Actions & utilities */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Ambient Audio Toggle */}
-          <button
-            onClick={handleToggleAudio}
-            title={isAudioPlaying ? copy.hero.soundToggleOn : copy.hero.soundToggleOff}
-            className={`min-h-[38px] px-2.5 sm:px-3 rounded-lg border text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-              isAudioPlaying
-                ? 'bg-[#E5242A]/15 border-[#E5242A]/50 text-[#E5242A]'
-                : 'bg-[#141414] border-[#262626] text-[#A5A5A5] hover:text-white'
-            }`}
-            aria-label={isAudioPlaying ? 'Wyłącz dźwięk' : 'Włącz dźwięk studyjny'}
-          >
-            {isAudioPlaying ? <Volume2 className="w-4 h-4 animate-pulse" /> : <VolumeX className="w-4 h-4" />}
-            <span className="hidden xl:inline text-[11px] font-mono uppercase">
-              {isAudioPlaying ? 'Audio ON' : 'Audio OFF'}
-            </span>
-          </button>
-
           {/* Language Switcher */}
           <button
             onClick={onToggleLang}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { X, Play, Pause, Volume2, VolumeX, Maximize2, Sparkles, Sliders, Film, ExternalLink } from 'lucide-react';
 import { ProjectConcept, Language } from '../types';
 import { SITE_COPY } from '../data/content';
-import { audioAtmosphere } from '../utils/audioAtmosphere';
 
 interface ShowreelModalProps {
   project: ProjectConcept | null;

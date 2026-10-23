@@ -23,6 +23,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     }
   };
 
+  const renderHeadline = () => {
+    const headline = copy.hero.headline;
+    if (headline.includes('NASZ OBRAZ')) {
+      const hasPeriod = headline.includes('NASZ OBRAZ.');
+      const searchTarget = hasPeriod ? 'NASZ OBRAZ.' : 'NASZ OBRAZ';
+      const parts = headline.split(searchTarget);
+      return (
+        <>
+          {parts[0]}
+          <span className="bg-[#E5242A] text-white px-2.5 sm:px-4 py-0.5 sm:py-1 rounded-md sm:rounded-xl inline-block shadow-xl shadow-[#E5242A]/40 mx-1 sm:mx-1.5 align-baseline font-extrabold tracking-tight">
+            {searchTarget}
+          </span>
+          {parts[1]}
+        </>
+      );
+    }
+    return headline;
+  };
+
   return (
     <section className="relative min-h-[92vh] lg:min-h-screen flex flex-col justify-between pt-24 pb-8 overflow-hidden bg-[#080808]">
       {/* Background Image with Bright, Vivid, Clear Treatment */}
@@ -60,10 +79,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Master Headline */}
           <h1
-            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.12] sm:leading-[1.08] text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] break-words"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.18] sm:leading-[1.12] text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] break-words"
             style={{ textWrap: 'balance' }}
           >
-            {copy.hero.headline}
+            {renderHeadline()}
           </h1>
 
           {/* Subtitle */}
