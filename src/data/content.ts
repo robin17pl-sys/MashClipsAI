@@ -635,14 +635,14 @@ export const PIPELINE_STAGES: PipelineStage[] = [
       en: 'We capture the live artist on a professional green screen soundstage.',
     },
     details: {
-      pl: 'Wspólnie z Dream Studio Productions realizujemy zdjęcia na cykloramie Green Screen. Stosujemy kamery kinowe (ARRI / RED / Sony Venice), profesjonalne oświetlenie dopasowane do przyszłego świata AI oraz precyzyjne znaczniki trackingu kamery.',
-      en: 'Co-produced with Dream Studio Productions on a dedicated green screen cyclorama. Armed with cinema-grade sensor cameras, directional lighting matching the planned virtual world, and precision camera tracking markers.',
+      pl: 'Wspólnie z Dream Studio Productions realizujemy zdjęcia na tle Green Screen. Stosujemy kamery kinowe 4K w razie potrzeby 6K, profesjonalne oświetlenie dopasowane do przyszłego świata AI.',
+      en: 'Co-produced with Dream Studio Productions against green screen backdrops. We utilize 4K cinema cameras (6K when required) and professional studio lighting tailored to the AI-generated world.',
     },
     keyDeliverables: {
-      pl: ['Materiały źródłowe 4K/6K Raw z kamery kinowej', 'Ścieżki audio z odsłuchu studyjnego', 'Dane telemetryczne kamery i metadane oświetlenia'],
-      en: ['4K/6K Raw cinema source footage', 'Reference in-ear audio scratch track', 'Lens telemetry and lighting angle logs'],
+      pl: ['Materiały źródłowe 4K/6K z kamery kinowej', 'Ścieżki audio z odsłuchu studyjnego', 'Metadane oświetlenia i ujęć'],
+      en: ['4K/6K cinema source footage', 'Reference in-ear audio scratch track', 'Lighting and take metadata logs'],
     },
-    techSpec: 'ARRI Alexa / RED Gemini + Oświetlenie Aputure/Nanlite',
+    techSpec: 'Kamery kinowe 4K/6K + Oświetlenie studyjne',
   },
   {
     id: 'ai-world',
