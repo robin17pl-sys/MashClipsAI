@@ -25,12 +25,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <section className="relative min-h-[92vh] lg:min-h-screen flex flex-col justify-between pt-24 pb-8 overflow-hidden bg-[#080808]">
-      {/* Background Image with Cinematic Scrim */}
+      {/* Background Image with Bright, Vivid, Clear Treatment */}
       <div className="absolute inset-0 z-0">
         <img
           src={IMAGES.hero}
           alt="MASH Clips AI - Muzyk na planie Green Screen i surrealistyczny świat AI"
-          className="w-full h-full object-cover object-center opacity-65 scale-[1.02] transform transition-transform duration-1000"
+          className="w-full h-full object-cover object-center sm:object-[center_35%] opacity-95 brightness-110 contrast-105 saturate-[1.1] scale-[1.01] transition-all duration-700"
           onError={(e) => {
             const target = e.currentTarget;
             if (!target.src.includes('hero.jpg')) {
@@ -38,35 +38,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }
           }}
         />
-        {/* Measured Scrim for contrast compliance */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#080808_80%)]" />
-        <div className="absolute inset-0 film-grain pointer-events-none" />
+        {/* Clear, refined scrim: lets the artwork shine bright while keeping text 100% legible */}
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#080808]/85 via-[#080808]/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/80 via-[#080808]/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 film-grain pointer-events-none opacity-20" />
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center my-auto">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center my-auto py-8">
         <div className="max-w-4xl space-y-6">
           {/* Subtle Editorial Kicker */}
-          <div className="flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-[#E5242A]">
-            <span className="w-6 h-px bg-[#E5242A]" />
+          <div className="inline-flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-[#E5242A] bg-[#080808]/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
+            <span className="w-2 h-2 rounded-full bg-[#E5242A] animate-pulse" />
             <span className="font-semibold">{copy.hero.badge}</span>
             <span className="text-[#A5A5A5] hidden sm:inline">·</span>
-            <span className="text-[#A5A5A5] hidden sm:inline text-[11px] normal-case font-sans">
+            <span className="text-[#d4d4d4] hidden sm:inline text-[11px] normal-case font-sans">
               MASH Schron Muzyczny × Dream Studio Productions
             </span>
           </div>
 
           {/* Master Headline */}
           <h1
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.08] text-balance"
+            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display text-white tracking-tight leading-[1.08] text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]"
             style={{ textWrap: 'balance' }}
           >
             {copy.hero.headline}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg lg:text-xl text-[#d4d4d4] font-normal leading-relaxed max-w-2xl">
+          <p className="text-base sm:text-lg lg:text-xl text-[#F5F5F5] font-normal leading-relaxed max-w-2xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
             {copy.hero.subheadline}
           </p>
 
@@ -74,7 +75,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={onOpenBrief}
-              className="px-6 py-3.5 bg-[#E5242A] hover:bg-[#c91d22] text-white font-semibold text-sm uppercase tracking-wider rounded-lg transition-all shadow-lg shadow-[#E5242A]/25 flex items-center gap-2 group cursor-pointer"
+              className="px-6 py-3.5 bg-[#E5242A] hover:bg-[#c91d22] text-white font-semibold text-sm uppercase tracking-wider rounded-lg transition-all shadow-xl shadow-[#E5242A]/30 hover:shadow-[#E5242A]/50 flex items-center gap-2 group cursor-pointer"
             >
               <span>{copy.hero.ctaPrimary}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -82,7 +83,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             <button
               onClick={onOpenShowreel}
-              className="px-6 py-3.5 bg-[#171717]/80 hover:bg-[#222222] text-[#F5F5F5] hover:text-white font-medium text-sm rounded-lg border border-[#333333] hover:border-[#555555] backdrop-blur-sm transition-all flex items-center gap-2.5 cursor-pointer"
+              className="px-6 py-3.5 bg-[#171717]/90 hover:bg-[#222222] text-[#F5F5F5] hover:text-white font-medium text-sm rounded-lg border border-[#444444] hover:border-[#666666] backdrop-blur-md transition-all shadow-lg flex items-center gap-2.5 cursor-pointer"
             >
               <div className="w-6 h-6 rounded-full bg-[#E5242A]/20 flex items-center justify-center text-[#E5242A]">
                 <Play className="w-3 h-3 fill-current ml-0.5" />

@@ -117,32 +117,68 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
     return Object.keys(errs).length === 0;
   };
 
+  const generateMailtoUrl = (data: BriefFormData, refId: string) => {
+    const subject = encodeURIComponent(`[BRIEF MASH CLIPS AI] ${refId} - ${data.artistName || 'Nowy projekt'}`);
+    const body = encodeURIComponent(`
+Dzień dobry!
+
+Przesyłam wypełniony formularz briefu ze strony MASH Clips AI:
+
+DANE PROJEKTU:
+--------------------------------------------------
+Numer referencyjny: ${refId}
+Data zgłoszenia: ${new Date().toLocaleString('pl-PL')}
+Artysta / Zespół: ${data.artistName}
+Gatunek muzyczny: ${data.genre}
+Wybrany pakiet: ${data.productionPackage}
+Link do utworu / demo: ${data.demoLink}
+Orientacyjny budżet: ${data.estimatedBudget || 'Do wyceny'}
+Planowany termin: ${data.targetDeadline || 'Elastyczny'}
+
+DANE KONTAKTOWE:
+--------------------------------------------------
+Osoba kontaktowa: ${data.fullName}
+Adres e-mail: ${data.email}
+
+OPIS KONCEPCJI I WIZJI WIZUALNEJ:
+--------------------------------------------------
+${data.conceptDescription}
+
+--------------------------------------------------
+Wiadomość wygenerowana z formularza na stronie MASH Clips AI.
+Adres docelowy: dreamstudiopl@gmail.com
+    `.trim());
+
+    return `mailto:dreamstudiopl@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    // Genuine client storage + reference generation
-    setTimeout(() => {
-      const refId = `MASH-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-      const submission = {
-        data: { ...formData },
-        referenceId: refId,
-        submittedAt: new Date().toISOString(),
-      };
+    const refId = `MASH-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const submission = {
+      data: { ...formData },
+      referenceId: refId,
+      submittedAt: new Date().toISOString(),
+    };
 
-      try {
-        const history = JSON.parse(localStorage.getItem('mash_briefs_history') || '[]');
-        history.unshift(submission);
-        localStorage.setItem('mash_briefs_history', JSON.stringify(history));
-      } catch {
-        // ignore
-      }
+    try {
+      const history = JSON.parse(localStorage.getItem('mash_briefs_history') || '[]');
+      history.unshift(submission);
+      localStorage.setItem('mash_briefs_history', JSON.stringify(history));
+    } catch {
+      // ignore
+    }
 
-      setSubmittedBrief(submission);
-      setIsSubmitting(false);
-    }, 600);
+    setSubmittedBrief(submission);
+    setIsSubmitting(false);
+
+    // Automatyczne przekierowanie całego formularza na dreamstudiopl@gmail.com
+    const mailtoUrl = generateMailtoUrl(formData, refId);
+    window.location.href = mailtoUrl;
   };
 
   const handleCopySummary = () => {
@@ -161,6 +197,7 @@ Budżet orientacyjny: ${submittedBrief.data.estimatedBudget || 'Do ustalenia'}
 Termin realizacji: ${submittedBrief.data.targetDeadline || 'Do ustalenia'}
 Opis koncepcji:
 ${submittedBrief.data.conceptDescription}
+Adres docelowy: dreamstudiopl@gmail.com
 ======================================
     `.trim();
 
@@ -184,25 +221,8 @@ ${submittedBrief.data.conceptDescription}
 
   const handleMailtoDirect = () => {
     if (!submittedBrief) return;
-    const subject = encodeURIComponent(`[BRIEF] ${submittedBrief.referenceId} - ${submittedBrief.data.artistName}`);
-    const body = encodeURIComponent(`
-Cześć MASH Clips AI & Dream Studio!
-
-Przesyłam wypełniony brief teledysku:
-
-- Artysta: ${submittedBrief.data.artistName}
-- Kontakt: ${submittedBrief.data.fullName} (${submittedBrief.data.email})
-- Gatunek: ${submittedBrief.data.genre}
-- Pakiet: ${submittedBrief.data.productionPackage}
-- Link do utworu/demo: ${submittedBrief.data.demoLink}
-- Budżet: ${submittedBrief.data.estimatedBudget || 'Do wyceny'}
-- Planowany termin: ${submittedBrief.data.targetDeadline || 'Elastyczny'}
-
-Opis wizji i pomysłu:
-${submittedBrief.data.conceptDescription}
-    `.trim());
-
-    window.location.href = `mailto:DreamStudiopl@gmail.com?subject=${subject}&body=${body}`;
+    const mailtoUrl = generateMailtoUrl(submittedBrief.data, submittedBrief.referenceId);
+    window.location.href = mailtoUrl;
   };
 
   const handleResetForm = () => {
@@ -271,6 +291,21 @@ ${submittedBrief.data.conceptDescription}
                     <span className="text-[#E5242A] font-bold text-sm">
                       {submittedBrief.referenceId}
                     </span>
+                  </div>
+
+                  <div className="p-3 rounded-lg bg-[#E5242A]/10 border border-[#E5242A]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-white">
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-[#E5242A] shrink-0" />
+                      <span className="text-[#A5A5A5]">
+                        {currentLang === 'pl' ? 'Docelowy adres e-mail:' : 'Target studio e-mail:'}
+                      </span>
+                    </div>
+                    <a
+                      href="mailto:dreamstudiopl@gmail.com"
+                      className="text-white font-bold hover:text-[#E5242A] transition-colors"
+                    >
+                      dreamstudiopl@gmail.com
+                    </a>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[#cccccc]">
@@ -577,7 +612,7 @@ ${submittedBrief.data.conceptDescription}
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4">
+                <div className="pt-4 space-y-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -588,6 +623,17 @@ ${submittedBrief.data.conceptDescription}
                     </span>
                     <Send className="w-4 h-4" />
                   </button>
+                  <p className="text-[11px] text-[#888888] font-mono flex items-center gap-1.5 pt-1">
+                    <Mail className="w-3.5 h-3.5 text-[#E5242A]" />
+                    <span>
+                      {currentLang === 'pl'
+                        ? 'Formularz zostanie przekierowany bezpośrednio na mail: '
+                        : 'The entire form is routed directly to email: '}
+                      <a href="mailto:dreamstudiopl@gmail.com" className="text-white hover:text-[#E5242A] underline font-semibold">
+                        dreamstudiopl@gmail.com
+                      </a>
+                    </span>
+                  </p>
                 </div>
               </form>
             )}

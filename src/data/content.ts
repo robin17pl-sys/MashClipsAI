@@ -173,13 +173,13 @@ export const SITE_COPY = {
           'Wyrażam zgodę na przetwarzanie podanych danych osobowych w celu przygotowania koncepcji teledysku i oferty współpracy zgodnie z polityką prywatności.',
         submitBtn: 'ROZPOCZNIJMY TWÓJ PROJEKT',
         submitting: 'Przetwarzanie zapytania...',
-        successTitle: 'Brief został pomyślnie przyjęty!',
+        successTitle: 'Brief został przygotowany i skierowany do wysyłki!',
         successMessage:
-          'Dziękujemy za przesłanie zgłoszenia do MASH Clips AI. Przeanalizujemy Twój utwór i skontaktujemy się z Tobą w ciągu 24–48 godzin, aby przedstawić wstępną koncepcję wizualną.',
+          'Dziękujemy za wypełnienie briefu! Formularz został automatycznie przekierowany na adres dreamstudiopl@gmail.com. Jeśli okno programu pocztowego nie otworzyło się automatycznie, kliknij poniższy przycisk, aby wysłać wiadomość.',
         referenceCode: 'Numer referencyjny Twojego briefu:',
         copyBrief: 'Kopiuj treść briefu',
         downloadBrief: 'Pobierz podsumowanie (JSON)',
-        sendEmailDirect: 'Wyślij kopię przez e-mail',
+        sendEmailDirect: 'Otwórz i wyślij e-mail (dreamstudiopl@gmail.com)',
         newBrief: 'Wypełnij kolejny formularz',
       },
       directContact: {
@@ -379,13 +379,13 @@ export const SITE_COPY = {
           'I consent to the processing of submitted information to prepare a music video concept and quotation in accordance with the privacy policy.',
         submitBtn: 'SUBMIT PROJECT BRIEF',
         submitting: 'Processing brief...',
-        successTitle: 'Brief Successfully Received!',
+        successTitle: 'Brief prepared and routed to studio!',
         successMessage:
-          'Thank you for submitting your project to MASH Clips AI. Our creative director will listen to your demo and return a visual concept proposal within 24–48 hours.',
+          'Thank you for submitting your brief! It has been automatically redirected to dreamstudiopl@gmail.com. If your email client did not open automatically, click the button below to send your message.',
         referenceCode: 'Brief Reference Number:',
         copyBrief: 'Copy Brief Content',
         downloadBrief: 'Download Summary (JSON)',
-        sendEmailDirect: 'Send via Email App',
+        sendEmailDirect: 'Open & Send E-mail (dreamstudiopl@gmail.com)',
         newBrief: 'Submit Another Brief',
       },
       directContact: {
