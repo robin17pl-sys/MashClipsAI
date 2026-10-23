@@ -142,14 +142,14 @@ export const GenresSection: React.FC<GenresSectionProps> = ({ currentLang, onSel
 
             {/* Key Spec Badges */}
             <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-white/95">
-              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm">
-                {currentLang === 'pl' ? 'Oświetlenie sceniczne & Haze' : 'Concert Lighting & Haze'}
+              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm font-semibold tracking-wide">
+                {currentLang === 'pl' ? 'KINOWA JAKOŚĆ 4K/6K' : '4K/6K CINEMA QUALITY'}
               </span>
-              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm">
-                {currentLang === 'pl' ? 'Kamera kinowa na wózku' : 'Dolly Cinema Camera Rig'}
+              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm font-semibold tracking-wide">
+                {currentLang === 'pl' ? 'OŚWIETLENIE STUDYJNE DEDYKOWANE' : 'DEDICATED STUDIO LIGHTING'}
               </span>
-              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm">
-                {currentLang === 'pl' ? 'Generatywny VFX AI 4K' : 'Generative 4K AI VFX'}
+              <span className="px-3.5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 shadow-sm font-semibold tracking-wide">
+                {currentLang === 'pl' ? 'ULTRA FOCUS & STABILIZACJA GIMBAL' : 'ULTRA FOCUS & GIMBAL STABILIZATION'}
               </span>
             </div>
 

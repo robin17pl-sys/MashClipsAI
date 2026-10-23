@@ -60,7 +60,8 @@ export interface AudienceGroup {
 export interface BriefFormData {
   fullName: string;
   email: string;
-  artistName: string;
+  phone: string;
+  artistName?: string;
   genre: string;
   demoLink: string;
   productionPackage?: string;
@@ -69,3 +70,4 @@ export interface BriefFormData {
   conceptDescription: string;
   acceptedPrivacy: boolean;
 }
+

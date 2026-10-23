@@ -34,6 +34,7 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   const [formData, setFormData] = useState<BriefFormData>({
     fullName: '',
     email: '',
+    phone: '',
     artistName: '',
     genre: '',
     demoLink: '',
@@ -66,38 +67,36 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   const validate = (): boolean => {
     const errs: Partial<Record<keyof BriefFormData, string>> = {};
 
+    // 1. Imię i nazwisko / Nazwa zespołu (Wymagane)
     if (!formData.fullName.trim()) {
-      errs.fullName = currentLang === 'pl' ? 'Podaj imię i nazwisko.' : 'Please enter your full name.';
+      errs.fullName =
+        currentLang === 'pl'
+          ? 'Podaj imię i nazwisko lub nazwę zespołu.'
+          : 'Please enter your full name or band name.';
     }
 
+    // 2. Numer telefonu (Wymagany)
+    const cleanPhone = formData.phone.trim().replace(/[\s\-\(\)\.]/g, '');
+    if (!formData.phone.trim()) {
+      errs.phone =
+        currentLang === 'pl' ? 'Numer telefonu jest wymagany.' : 'Phone number is required.';
+    } else if (cleanPhone.length < 7 || !/^[+]?[0-9]{7,15}$/.test(cleanPhone)) {
+      errs.phone =
+        currentLang === 'pl'
+          ? 'Wprowadź prawidłowy numer telefonu (min. 7 cyfr).'
+          : 'Please enter a valid phone number (min. 7 digits).';
+    }
+
+    // 3. Adres e-mail (Wymagany)
     if (!formData.email.trim()) {
       errs.email = currentLang === 'pl' ? 'Adres e-mail jest wymagany.' : 'Email address is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       errs.email = currentLang === 'pl' ? 'Wprowadź prawidłowy adres e-mail.' : 'Please enter a valid email address.';
     }
 
-    if (!formData.artistName.trim()) {
-      errs.artistName = currentLang === 'pl' ? 'Podaj nazwę artysty lub zespołu.' : 'Please enter artist or band name.';
-    }
+    // Gatunek muzyczny i link do utworu NIE są wymagane do wysyłki (pozostają opcjonalne)
 
-    if (!formData.genre.trim()) {
-      errs.genre = currentLang === 'pl' ? 'Wybierz lub wpisz gatunek muzyczny.' : 'Please specify musical genre.';
-    }
-
-    if (!formData.demoLink.trim()) {
-      errs.demoLink =
-        currentLang === 'pl'
-          ? 'Podaj link do utworu (SoundCloud, YouTube, Drive itp.).'
-          : 'Please provide a link to your track/demo.';
-    }
-
-    if (!formData.conceptDescription.trim() || formData.conceptDescription.trim().length < 15) {
-      errs.conceptDescription =
-        currentLang === 'pl'
-          ? 'Napisz przynajmniej kilka zdań o koncepcji lub klimacie utworu.'
-          : 'Please write at least a few sentences describing the concept or mood.';
-    }
-
+    // 4. Zgoda na przetwarzanie danych (Wymagana)
     if (!formData.acceptedPrivacy) {
       errs.acceptedPrivacy =
         currentLang === 'pl'
@@ -110,28 +109,29 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   };
 
   const generateMailtoUrl = (data: BriefFormData, refId: string) => {
-    const subject = encodeURIComponent(`[BRIEF MASH CLIPS AI] ${refId} - ${data.artistName || 'Nowy projekt'}`);
+    const clientName = data.fullName.trim() || 'Nowy projekt';
+    const subject = encodeURIComponent(`[BRIEF MASH CLIPS AI] ${refId} - ${clientName}`);
     const body = encodeURIComponent(`
 Dzień dobry!
 
 Przesyłam wypełniony formularz briefu ze strony MASH Clips AI:
 
-DANE PROJEKTU:
+DANE KONTAKTOWE:
 --------------------------------------------------
 Numer referencyjny: ${refId}
 Data zgłoszenia: ${new Date().toLocaleString('pl-PL')}
-Artysta / Zespół: ${data.artistName}
-Gatunek muzyczny: ${data.genre}
-Link do utworu / demo: ${data.demoLink}
-
-DANE KONTAKTOWE:
---------------------------------------------------
-Osoba kontaktowa: ${data.fullName}
+Imię i nazwisko / Nazwa zespołu: ${data.fullName}
+Numer telefonu: ${data.phone}
 Adres e-mail: ${data.email}
+
+SZCZEGÓŁY PROJEKTU:
+--------------------------------------------------
+Gatunek muzyczny: ${data.genre.trim() || '(nie podano / do ustalenia)'}
+Link do utworu / demo: ${data.demoLink.trim() || '(brak / do dosłania)'}
 
 OPIS KONCEPCJI I WIZJI WIZUALNEJ:
 --------------------------------------------------
-${data.conceptDescription}
+${data.conceptDescription.trim() || '(do omówienia podczas wstępnej konsultacji)'}
 
 --------------------------------------------------
 Wiadomość wygenerowana z formularza na stronie MASH Clips AI.
@@ -176,13 +176,13 @@ Adres docelowy: dreamstudiopl@gmail.com
 === BRIEF PRODUKCYJNY MASH CLIPS AI ===
 Nr referencyjny: ${submittedBrief.referenceId}
 Data: ${new Date(submittedBrief.submittedAt).toLocaleString()}
-Artysta / Zespół: ${submittedBrief.data.artistName}
-Osoba kontaktowa: ${submittedBrief.data.fullName}
+Imię i nazwisko / Nazwa zespołu: ${submittedBrief.data.fullName}
+Numer telefonu: ${submittedBrief.data.phone}
 E-mail: ${submittedBrief.data.email}
-Gatunek: ${submittedBrief.data.genre}
-Link do utworu: ${submittedBrief.data.demoLink}
+Gatunek: ${submittedBrief.data.genre.trim() || '(nie podano)'}
+Link do utworu: ${submittedBrief.data.demoLink.trim() || '(brak)'}
 Opis koncepcji:
-${submittedBrief.data.conceptDescription}
+${submittedBrief.data.conceptDescription.trim() || '(brak opisu)'}
 Adres docelowy: dreamstudiopl@gmail.com
 ======================================
     `.trim();
@@ -216,6 +216,7 @@ Adres docelowy: dreamstudiopl@gmail.com
     setFormData({
       fullName: '',
       email: '',
+      phone: '',
       artistName: '',
       genre: '',
       demoLink: '',
@@ -293,21 +294,46 @@ Adres docelowy: dreamstudiopl@gmail.com
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[#cccccc]">
                     <div>
-                      <span className="text-[#777777] block">Artysta / Zespół:</span>
-                      <span className="text-white font-medium">{submittedBrief.data.artistName}</span>
-                    </div>
-                    <div>
-                      <span className="text-[#777777] block">Osoba kontaktowa:</span>
+                      <span className="text-[#777777] block">
+                        {currentLang === 'pl' ? 'Imię i nazwisko / Zespół:' : 'Name / Band:'}
+                      </span>
                       <span className="text-white font-medium">{submittedBrief.data.fullName}</span>
                     </div>
                     <div>
-                      <span className="text-[#777777] block">E-mail:</span>
+                      <span className="text-[#777777] block">
+                        {currentLang === 'pl' ? 'Numer telefonu:' : 'Phone Number:'}
+                      </span>
+                      <span className="text-white font-medium">{submittedBrief.data.phone}</span>
+                    </div>
+                    <div>
+                      <span className="text-[#777777] block">
+                        {currentLang === 'pl' ? 'Adres e-mail:' : 'Email Address:'}
+                      </span>
                       <span className="text-white font-medium">{submittedBrief.data.email}</span>
                     </div>
                     <div>
-                      <span className="text-[#777777] block">Gatunek:</span>
-                      <span className="text-white font-medium">{submittedBrief.data.genre}</span>
+                      <span className="text-[#777777] block">
+                        {currentLang === 'pl' ? 'Gatunek muzyczny:' : 'Musical Genre:'}
+                      </span>
+                      <span className="text-white font-medium">
+                        {submittedBrief.data.genre.trim() || (currentLang === 'pl' ? 'Do ustalenia' : 'TBD')}
+                      </span>
                     </div>
+                    {submittedBrief.data.demoLink && (
+                      <div className="sm:col-span-2">
+                        <span className="text-[#777777] block">
+                          {currentLang === 'pl' ? 'Link do utworu / demo:' : 'Track / Demo Link:'}
+                        </span>
+                        <a
+                          href={submittedBrief.data.demoLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#E5242A] hover:underline break-all"
+                        >
+                          {submittedBrief.data.demoLink}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -366,7 +392,7 @@ Adres docelowy: dreamstudiopl@gmail.com
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                  {/* Full Name */}
+                  {/* Full Name / Band Name - Required */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
                       {copy.contact.form.fullName} <span className="text-[#E5242A]">*</span>
@@ -388,7 +414,35 @@ Adres docelowy: dreamstudiopl@gmail.com
                     )}
                   </div>
 
-                  {/* Email */}
+                  {/* Phone Number - Required (Replaces Artist Name) */}
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
+                      {copy.contact.form.phone || (currentLang === 'pl' ? 'Numer telefonu' : 'Phone Number')}{' '}
+                      <span className="text-[#E5242A]">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder={copy.contact.form.phonePlaceholder || '+48 500 000 000'}
+                        className={`w-full pl-10 pr-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
+                          errors.phone ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
+                        }`}
+                      />
+                      <Phone className="w-4 h-4 text-[#777777] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                    {errors.phone && (
+                      <span className="text-[11px] text-[#E5242A] flex items-center gap-1 mt-1 font-mono">
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.phone}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                  {/* Email - Required */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
                       {copy.contact.form.email} <span className="text-[#E5242A]">*</span>
@@ -409,60 +463,38 @@ Adres docelowy: dreamstudiopl@gmail.com
                       </span>
                     )}
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                  {/* Artist / Band Name */}
+                  {/* Musical Genre - Optional */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.artistName} <span className="text-[#E5242A]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.artistName}
-                      onChange={(e) => setFormData({ ...formData, artistName: e.target.value })}
-                      placeholder={copy.contact.form.artistNamePlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
-                        errors.artistName ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
-                      }`}
-                    />
-                    {errors.artistName && (
-                      <span className="text-[11px] text-[#E5242A] flex items-center gap-1 mt-1 font-mono">
-                        <AlertCircle className="w-3 h-3" />
-                        {errors.artistName}
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
+                        {currentLang === 'pl' ? 'Gatunek muzyczny' : 'Musical Genre'}
+                      </label>
+                      <span className="text-[10px] font-mono text-[#777777]">
+                        {currentLang === 'pl' ? '(opcjonalnie)' : '(optional)'}
                       </span>
-                    )}
-                  </div>
-
-                  {/* Musical Genre */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.genre} <span className="text-[#E5242A]">*</span>
-                    </label>
+                    </div>
                     <input
                       type="text"
                       value={formData.genre}
                       onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                       placeholder={copy.contact.form.genrePlaceholder}
-                      className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
-                        errors.genre ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
-                      }`}
+                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] focus:border-[#555555] text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
                     />
-                    {errors.genre && (
-                      <span className="text-[11px] text-[#E5242A] flex items-center gap-1 mt-1 font-mono">
-                        <AlertCircle className="w-3 h-3" />
-                        {errors.genre}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {/* Track Link / Demo Link */}
+                {/* Track Link / Demo Link - Optional */}
                 <div className="space-y-1.5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.demoLink} <span className="text-[#E5242A]">*</span>
-                    </label>
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
+                        {currentLang === 'pl' ? 'Link do utworu / demo' : 'Link to Track or Demo'}
+                      </label>
+                      <span className="text-[10px] font-mono text-[#777777]">
+                        {currentLang === 'pl' ? '(opcjonalnie)' : '(optional)'}
+                      </span>
+                    </div>
                     <span className="text-[11px] font-mono text-[#888888]">
                       {copy.contact.form.demoLinkHelp}
                     </span>
@@ -472,38 +504,27 @@ Adres docelowy: dreamstudiopl@gmail.com
                     value={formData.demoLink}
                     onChange={(e) => setFormData({ ...formData, demoLink: e.target.value })}
                     placeholder={copy.contact.form.demoLinkPlaceholder}
-                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
-                      errors.demoLink ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
-                    }`}
+                    className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] focus:border-[#555555] text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
                   />
-                  {errors.demoLink && (
-                    <span className="text-[11px] text-[#E5242A] flex items-center gap-1 mt-1 font-mono">
-                      <AlertCircle className="w-3 h-3" />
-                      {errors.demoLink}
-                    </span>
-                  )}
                 </div>
 
-                {/* Concept Description */}
+                {/* Concept Description - Optional */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                    {copy.contact.form.conceptDescription} <span className="text-[#E5242A]">*</span>
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
+                      {copy.contact.form.conceptDescription}
+                    </label>
+                    <span className="text-[10px] font-mono text-[#777777]">
+                      {currentLang === 'pl' ? 'opcjonalnie' : 'optional'}
+                    </span>
+                  </div>
                   <textarea
                     rows={4}
                     value={formData.conceptDescription}
                     onChange={(e) => setFormData({ ...formData, conceptDescription: e.target.value })}
                     placeholder={copy.contact.form.conceptPlaceholder}
-                    className={`w-full px-4 py-3 rounded-lg bg-[#181818] border text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors ${
-                      errors.conceptDescription ? 'border-[#E5242A]' : 'border-[#2a2a2a] focus:border-[#555555]'
-                    }`}
+                    className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] focus:border-[#555555] text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none transition-colors"
                   />
-                  {errors.conceptDescription && (
-                    <span className="text-[11px] text-[#E5242A] flex items-center gap-1 mt-1 font-mono">
-                      <AlertCircle className="w-3 h-3" />
-                      {errors.conceptDescription}
-                    </span>
-                  )}
                 </div>
 
                 {/* Privacy Policy Consent Checkbox - Touch Friendly Box */}
