@@ -40,7 +40,12 @@ export const PartnershipSection: React.FC<PartnershipSectionProps> = ({ currentL
               src={IMAGES.productionStage}
               alt="MASH Schron Muzyczny i Dream Studio Productions plan produkcyjny"
               className="w-full h-full object-cover object-center"
-              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('production_stage.jpg')) {
+                  target.src = '/images/production_stage.jpg';
+                }
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 

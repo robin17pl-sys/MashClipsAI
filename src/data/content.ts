@@ -1,10 +1,14 @@
 import { ProjectConcept, PipelineStage, OfferPackage, AudienceGroup } from '../types';
+import heroImg from '../assets/images/hero_greenscreen_ai_1792659959456.jpg';
+import rawStudioImg from '../assets/images/greenscreen_raw_studio_1792659959653.jpg';
+import aiFinalImg from '../assets/images/greenscreen_ai_final_1792659961299.jpg';
+import productionStageImg from '../assets/images/studio_production_stage_1792659960829.jpg';
 
 export const IMAGES = {
-  hero: '/src/assets/images/hero_greenscreen_ai_1792659959456.jpg',
-  rawStudio: '/src/assets/images/greenscreen_raw_studio_1792659959653.jpg',
-  aiFinal: '/src/assets/images/greenscreen_ai_final_1792659961299.jpg',
-  productionStage: '/src/assets/images/studio_production_stage_1792659960829.jpg',
+  hero: heroImg,
+  rawStudio: rawStudioImg,
+  aiFinal: aiFinalImg,
+  productionStage: productionStageImg,
 };
 
 export const SITE_COPY = {

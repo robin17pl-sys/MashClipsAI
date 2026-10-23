@@ -96,6 +96,14 @@ export const ShowreelModal: React.FC<ShowreelModalProps> = ({
               <img
                 src={project.thumbnail}
                 alt={project.title}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (project.youtubeId && !target.src.includes('hqdefault')) {
+                    target.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                  } else {
+                    target.src = '/images/hero.jpg';
+                  }
+                }}
                 className="w-full h-full object-cover object-center filter brightness-95"
                 referrerPolicy="no-referrer"
               />

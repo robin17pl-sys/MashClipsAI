@@ -31,7 +31,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           src={IMAGES.hero}
           alt="MASH Clips AI - Muzyk na planie Green Screen i surrealistyczny świat AI"
           className="w-full h-full object-cover object-center opacity-65 scale-[1.02] transform transition-transform duration-1000"
-          referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (!target.src.includes('hero.jpg')) {
+              target.src = '/images/hero.jpg';
+            }
+          }}
         />
         {/* Measured Scrim for contrast compliance */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/40" />
