@@ -10,6 +10,7 @@ import {
   Copy,
   Download,
   RotateCcw,
+  Loader2,
 } from 'lucide-react';
 import { Language, BriefFormData } from '../types';
 import { SITE_COPY } from '../data/content';
@@ -48,7 +49,9 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
     data: BriefFormData;
     referenceId: string;
     submittedAt: string;
+    autoSent?: boolean;
   } | null>(null);
+  const [deliveryStatus, setDeliveryStatus] = useState<'success' | 'fallback' | null>(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -141,17 +144,64 @@ Adres docelowy: dreamstudiopl@gmail.com
     return `mailto:dreamstudiopl@gmail.com?subject=${subject}&body=${body}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setDeliveryStatus(null);
 
     const refId = `MASH-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const payload = {
+      _subject: `[MASH CLIPS AI] Nowy Brief: ${formData.fullName.trim()} (${refId})`,
+      _replyto: formData.email.trim(),
+      _template: 'table',
+      _captcha: 'false',
+      'Numer referencyjny': refId,
+      'Data zgłoszenia': new Date().toLocaleString(currentLang === 'pl' ? 'pl-PL' : 'en-US'),
+      'Imię i nazwisko / Nazwa zespołu': formData.fullName.trim(),
+      'Numer telefonu': formData.phone.trim(),
+      'Adres e-mail': formData.email.trim(),
+      'Gatunek muzyczny': formData.genre.trim() || (currentLang === 'pl' ? 'Do ustalenia' : 'TBD'),
+      'Link do utworu / demo': formData.demoLink.trim() || (currentLang === 'pl' ? 'Brak' : 'None'),
+      'Opis koncepcji / wizja artystyczna':
+        formData.conceptDescription.trim() ||
+        (currentLang === 'pl'
+          ? 'Do omówienia podczas wstępnej konsultacji'
+          : 'To discuss during initial consultation'),
+    };
+
+    let sentAutomatically = false;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+      const res = await fetch('https://formsubmit.co/ajax/dreamstudiopl@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        sentAutomatically = true;
+      }
+    } catch (err) {
+      console.warn('FormSubmit external delivery notice:', err);
+      sentAutomatically = false;
+    }
+
     const submission = {
       data: { ...formData },
       referenceId: refId,
       submittedAt: new Date().toISOString(),
+      autoSent: sentAutomatically,
     };
 
     try {
@@ -163,11 +213,8 @@ Adres docelowy: dreamstudiopl@gmail.com
     }
 
     setSubmittedBrief(submission);
+    setDeliveryStatus(sentAutomatically ? 'success' : 'fallback');
     setIsSubmitting(false);
-
-    // Automatyczne przekierowanie całego formularza na dreamstudiopl@gmail.com
-    const mailtoUrl = generateMailtoUrl(formData, refId);
-    window.location.href = mailtoUrl;
   };
 
   const handleCopySummary = () => {
@@ -213,6 +260,7 @@ Adres docelowy: dreamstudiopl@gmail.com
 
   const handleResetForm = () => {
     setSubmittedBrief(null);
+    setDeliveryStatus(null);
     setFormData({
       fullName: '',
       email: '',
@@ -255,19 +303,44 @@ Adres docelowy: dreamstudiopl@gmail.com
             {submittedBrief ? (
               /* Success State */
               <div className="space-y-6 animate-fade-in">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-6 h-6" />
+                {deliveryStatus === 'fallback' ? (
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
+                      <AlertCircle className="w-6 h-6" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-[10px] font-mono uppercase tracking-wider font-semibold border border-amber-500/20">
+                        {currentLang === 'pl' ? 'Wymagana wysyłka 1-kliknięciem' : '1-Click Send Required'}
+                      </div>
+                      <h3 className="text-xl font-bold font-display text-white">
+                        {currentLang === 'pl' ? 'Brief gotowy do przekazania' : 'Brief Ready for Dispatch'}
+                      </h3>
+                      <p className="text-sm text-[#A5A5A5] leading-relaxed">
+                        {currentLang === 'pl'
+                          ? 'Twój brief został bezpiecznie zapisany. Z powodu blokady zewnętrznych skryptów w przeglądarce, kliknij poniższy przycisk, aby wysłać go do studia:'
+                          : 'Your brief is safely saved. Due to browser restrictions, click below to dispatch to our studio:'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <h3 className="text-xl font-bold font-display text-white">
-                      {copy.contact.form.successTitle}
-                    </h3>
-                    <p className="text-sm text-[#A5A5A5]">
-                      {copy.contact.form.successMessage}
-                    </p>
+                ) : (
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono uppercase tracking-wider font-semibold border border-emerald-500/20">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        {currentLang === 'pl' ? 'Wysłano automatycznie online' : 'Automatically sent online'}
+                      </div>
+                      <h3 className="text-xl font-bold font-display text-white">
+                        {copy.contact.form.successTitle}
+                      </h3>
+                      <p className="text-sm text-[#A5A5A5] leading-relaxed">
+                        {copy.contact.form.successMessage}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className="p-5 rounded-xl bg-[#171717] border border-[#262626] space-y-3 font-mono text-xs">
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#242424] pb-3">
@@ -277,16 +350,16 @@ Adres docelowy: dreamstudiopl@gmail.com
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-[#E5242A]/10 border border-[#E5242A]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-white">
+                  <div className="p-3 rounded-lg bg-emerald-950/20 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-white">
                     <div className="flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-[#E5242A] shrink-0" />
+                      <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
                       <span className="text-[#A5A5A5]">
-                        {currentLang === 'pl' ? 'Docelowy adres e-mail:' : 'Target studio e-mail:'}
+                        {currentLang === 'pl' ? 'Docelowy adres studia:' : 'Target studio email:'}
                       </span>
                     </div>
                     <a
                       href="mailto:dreamstudiopl@gmail.com"
-                      className="text-white font-bold hover:text-[#E5242A] transition-colors"
+                      className="text-emerald-300 font-bold hover:underline transition-colors"
                     >
                       dreamstudiopl@gmail.com
                     </a>
@@ -334,25 +407,46 @@ Adres docelowy: dreamstudiopl@gmail.com
                         </a>
                       </div>
                     )}
+                    {submittedBrief.data.conceptDescription && (
+                      <div className="sm:col-span-2 pt-1 border-t border-[#242424]">
+                        <span className="text-[#777777] block">
+                          {currentLang === 'pl' ? 'Opis pomysłu / uwagi:' : 'Concept / Vision:'}
+                        </span>
+                        <p className="text-[#cccccc] text-xs font-sans whitespace-pre-wrap mt-0.5">
+                          {submittedBrief.data.conceptDescription}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* Practical Action Buttons */}
                 <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <button
-                    onClick={handleMailtoDirect}
-                    className="px-4 py-2.5 bg-[#E5242A] hover:bg-[#c91d22] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-sm"
-                  >
-                    <Mail className="w-4 h-4" />
-                    <span>{copy.contact.form.sendEmailDirect}</span>
-                  </button>
+                  {deliveryStatus === 'fallback' ? (
+                    <button
+                      onClick={handleMailtoDirect}
+                      className="px-5 py-3 bg-[#E5242A] hover:bg-[#c91d22] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-lg shadow-[#E5242A]/20"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>{copy.contact.form.sendEmailDirect}</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleMailtoDirect}
+                      className="px-4 py-2.5 bg-[#1a1a1a] hover:bg-[#252525] text-[#b0b0b0] hover:text-white text-xs font-semibold rounded-lg border border-[#333333] transition-colors flex items-center gap-2 cursor-pointer"
+                      title={currentLang === 'pl' ? 'Wyślij dodatkową kopię ze swojej skrzynki' : 'Send extra copy from your mail app'}
+                    >
+                      <Mail className="w-4 h-4 text-[#888888]" />
+                      <span>{copy.contact.form.sendEmailDirect}</span>
+                    </button>
+                  )}
 
                   <button
                     onClick={handleCopySummary}
                     className="px-4 py-2.5 bg-[#1f1f1f] hover:bg-[#282828] text-white text-xs font-semibold rounded-lg border border-[#333333] transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <Copy className="w-4 h-4 text-[#A5A5A5]" />
-                    <span>{copied ? 'Skopiowano!' : copy.contact.form.copyBrief}</span>
+                    <span>{copied ? (currentLang === 'pl' ? 'Skopiowano!' : 'Copied!') : copy.contact.form.copyBrief}</span>
                   </button>
 
                   <button
@@ -549,28 +643,43 @@ Adres docelowy: dreamstudiopl@gmail.com
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-3 space-y-2">
+                <div className="pt-3 space-y-3">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-8 py-4 sm:py-3.5 bg-[#E5242A] hover:bg-[#c91d22] disabled:opacity-50 text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-[#E5242A]/20 flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full sm:w-auto px-8 py-4 sm:py-3.5 bg-[#E5242A] hover:bg-[#c91d22] disabled:opacity-60 text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-[#E5242A]/20 flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>
-                      {isSubmitting ? copy.contact.form.submitting : copy.contact.form.submitBtn}
-                    </span>
-                    <Send className="w-4 h-4" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-white" />
+                        <span>{copy.contact.form.submitting}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>{copy.contact.form.submitBtn}</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
-                  <p className="text-[11px] text-[#888888] font-mono flex items-center gap-1.5 pt-1">
-                    <Mail className="w-3.5 h-3.5 text-[#E5242A] shrink-0" />
-                    <span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs font-mono text-[#888888] pt-1">
+                    <div className="flex items-center gap-1.5 text-emerald-400">
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                      <span className="font-semibold">
+                        {currentLang === 'pl'
+                          ? 'Automatyczna wysyłka online'
+                          : 'Instant automatic submission'}
+                      </span>
+                    </div>
+                    <span className="hidden sm:inline text-[#444444]">·</span>
+                    <span className="text-[#999999]">
                       {currentLang === 'pl'
-                        ? 'Formularz zostanie przekierowany bezpośrednio na mail: '
-                        : 'The entire form is routed directly to email: '}
+                        ? 'Bezpośrednio do studia na adres: '
+                        : 'Directly to studio inbox: '}
                       <a href="mailto:dreamstudiopl@gmail.com" className="text-white hover:text-[#E5242A] underline font-semibold">
                         dreamstudiopl@gmail.com
                       </a>
                     </span>
-                  </p>
+                  </div>
                 </div>
               </form>
             )}

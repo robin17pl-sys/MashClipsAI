@@ -175,15 +175,15 @@ export const SITE_COPY = {
           'Napisz o czym jest utwór, jakie emocje ma wywoływać, jakie lokacje lub motywy wizualne Cię inspirują...',
         privacyConsent:
           'Wyrażam zgodę na przetwarzanie podanych danych osobowych w celu przygotowania koncepcji teledysku i oferty współpracy zgodnie z polityką prywatności.',
-        submitBtn: 'ROZPOCZNIJMY TWÓJ PROJEKT',
-        submitting: 'Przetwarzanie zapytania...',
-        successTitle: 'Brief został przygotowany i skierowany do wysyłki!',
+        submitBtn: 'WYŚLIJ BRIEF DO STUDIA',
+        submitting: 'Wysyłanie briefu do studia...',
+        successTitle: 'Brief został automatycznie wysłany!',
         successMessage:
-          'Dziękujemy za wypełnienie briefu! Formularz został automatycznie przekierowany na adres dreamstudiopl@gmail.com. Jeśli okno programu pocztowego nie otworzyło się automatycznie, kliknij poniższy przycisk, aby wysłać wiadomość.',
+          'Dziękujemy! Twój brief został pomyślnie wysłany online do studia na adres dreamstudiopl@gmail.com. Skontaktujemy się z Tobą telefonicznie lub mailowo w ciągu 24h, aby omówić wizję i wycenę.',
         referenceCode: 'Numer referencyjny Twojego briefu:',
         copyBrief: 'Kopiuj treść briefu',
         downloadBrief: 'Pobierz podsumowanie (JSON)',
-        sendEmailDirect: 'Otwórz i wyślij e-mail (dreamstudiopl@gmail.com)',
+        sendEmailDirect: 'Wyślij kopię przez e-mail (dreamstudiopl@gmail.com)',
         newBrief: 'Wypełnij kolejny formularz',
       },
       directContact: {
@@ -383,15 +383,15 @@ export const SITE_COPY = {
           'Describe the song mood, story, desired environments, colors, or emotional themes...',
         privacyConsent:
           'I consent to the processing of submitted information to prepare a music video concept and quotation in accordance with the privacy policy.',
-        submitBtn: 'SUBMIT PROJECT BRIEF',
-        submitting: 'Processing brief...',
-        successTitle: 'Brief prepared and routed to studio!',
+        submitBtn: 'SUBMIT BRIEF TO STUDIO',
+        submitting: 'Sending brief to studio...',
+        successTitle: 'Brief sent automatically!',
         successMessage:
-          'Thank you for submitting your brief! It has been automatically redirected to dreamstudiopl@gmail.com. If your email client did not open automatically, click the button below to send your message.',
+          'Thank you! Your project brief has been automatically delivered online to Dream Studio Productions at dreamstudiopl@gmail.com. We will contact you via phone or email within 24 hours to discuss details and pricing.',
         referenceCode: 'Brief Reference Number:',
         copyBrief: 'Copy Brief Content',
         downloadBrief: 'Download Summary (JSON)',
-        sendEmailDirect: 'Open & Send E-mail (dreamstudiopl@gmail.com)',
+        sendEmailDirect: 'Send copy via email (dreamstudiopl@gmail.com)',
         newBrief: 'Submit Another Brief',
       },
       directContact: {
