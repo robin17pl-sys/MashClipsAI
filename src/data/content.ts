@@ -976,43 +976,4 @@ export const AUDIENCE_GROUPS: AudienceGroup[] = [
     },
     iconName: 'Sparkles',
   },
-  {
-    id: 'producers',
-    title: { pl: 'Producenci & Beatmakerzy', en: 'Producers & Beatmakers' },
-    description: {
-      pl: 'Hipnotyzujące, dynamiczne teledyski i wizualizacje do dropów, basów i syntetycznych pejzaży dźwiękowych.',
-      en: 'Hypnotic sync visuals, bass-responsive dynamics, and futuristic aesthetics tailored for electronic and hip-hop beats.',
-    },
-    keyBenefit: {
-      pl: 'Wysoka retencja uwagi słuchacza na YouTube i w mediach społecznościowych.',
-      en: 'Maximum viewer retention and algorithm shareability.',
-    },
-    iconName: 'Sliders',
-  },
-  {
-    id: 'indie-labels',
-    title: { pl: 'Niezależne Wytwórnie Muzyczne', en: 'Independent Record Labels' },
-    description: {
-      pl: 'Standard wizualny dorównujący wielomilionowym budżetom majorsów, dostępny w elastycznych ramach produkcyjnych.',
-      en: 'Major-label visual fidelity without bloated legacy budgets, scalable across your artist roster.',
-    },
-    keyBenefit: {
-      pl: 'Budowanie prestiżowego katalogu wideo przy przewidywalnych kosztach.',
-      en: 'High-ROI catalog video assets with predictable milestones.',
-    },
-    iconName: 'Disc',
-  },
-  {
-    id: 'film-exp',
-    title: { pl: 'Twórcy Muzyki Filmowej & Awangardy', en: 'Film Score & Experimental Artists' },
-    description: {
-      pl: 'Eksperymentalne formy wizualne, które przełamują schematy tradycyjnego teledysku i wkraczają w obszar sztuki wideo.',
-      en: 'Avant-garde visual odysseys defying pop music video formulas to create memorable sensory installations.',
-    },
-    keyBenefit: {
-      pl: 'Nieograniczona wolność artystyczna bez kompromisów technicznych.',
-      en: 'Pure artistic autonomy unconstrained by physical set limits.',
-    },
-    iconName: 'Film',
-  },
 ];

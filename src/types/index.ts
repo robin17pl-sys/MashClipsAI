@@ -63,9 +63,9 @@ export interface BriefFormData {
   artistName: string;
   genre: string;
   demoLink: string;
-  productionPackage: string;
-  estimatedBudget: string;
-  targetDeadline: string;
+  productionPackage?: string;
+  estimatedBudget?: string;
+  targetDeadline?: string;
   conceptDescription: string;
   acceptedPrivacy: boolean;
 }

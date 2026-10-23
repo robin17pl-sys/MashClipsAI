@@ -16,7 +16,7 @@ import { SITE_COPY } from '../data/content';
 
 interface ContactBriefSectionProps {
   currentLang: Language;
-  preselectedPackage: string;
+  preselectedPackage?: string;
   calculatorCalculation?: {
     people: number;
     seconds: number;
@@ -27,7 +27,6 @@ interface ContactBriefSectionProps {
 
 export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
   currentLang,
-  preselectedPackage,
   calculatorCalculation,
 }) => {
   const copy = SITE_COPY[currentLang];
@@ -38,9 +37,6 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
     artistName: '',
     genre: '',
     demoLink: '',
-    productionPackage: preselectedPackage || 'MASH AI MUSIC VIDEO',
-    estimatedBudget: '',
-    targetDeadline: '',
     conceptDescription: '',
     acceptedPrivacy: false,
   });
@@ -58,18 +54,14 @@ export const ContactBriefSection: React.FC<ContactBriefSectionProps> = ({
     if (calculatorCalculation) {
       setFormData((prev) => ({
         ...prev,
-        productionPackage: calculatorCalculation.summary,
-        estimatedBudget: `${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} PLN`,
         conceptDescription: prev.conceptDescription
           ? prev.conceptDescription
           : currentLang === 'pl'
           ? `[Kalkulacja z kalkulatora]: ${calculatorCalculation.people} os. na scenie (490 zł/os.) + ${calculatorCalculation.seconds}s wideo (20 zł/s) = ${calculatorCalculation.totalPrice.toLocaleString('pl-PL')} zł netto.`
           : `[Calculator Estimate]: ${calculatorCalculation.people} performer(s) on stage (490 PLN/ea) + ${calculatorCalculation.seconds}s video (20 PLN/s) = ${calculatorCalculation.totalPrice.toLocaleString('en-US')} PLN net.`,
       }));
-    } else if (preselectedPackage) {
-      setFormData((prev) => ({ ...prev, productionPackage: preselectedPackage }));
     }
-  }, [preselectedPackage, calculatorCalculation, currentLang]);
+  }, [calculatorCalculation, currentLang]);
 
   const validate = (): boolean => {
     const errs: Partial<Record<keyof BriefFormData, string>> = {};
@@ -130,10 +122,7 @@ Numer referencyjny: ${refId}
 Data zgłoszenia: ${new Date().toLocaleString('pl-PL')}
 Artysta / Zespół: ${data.artistName}
 Gatunek muzyczny: ${data.genre}
-Wybrany pakiet: ${data.productionPackage}
 Link do utworu / demo: ${data.demoLink}
-Orientacyjny budżet: ${data.estimatedBudget || 'Do wyceny'}
-Planowany termin: ${data.targetDeadline || 'Elastyczny'}
 
 DANE KONTAKTOWE:
 --------------------------------------------------
@@ -188,13 +177,10 @@ Adres docelowy: dreamstudiopl@gmail.com
 Nr referencyjny: ${submittedBrief.referenceId}
 Data: ${new Date(submittedBrief.submittedAt).toLocaleString()}
 Artysta / Zespół: ${submittedBrief.data.artistName}
-Imię i nazwisko: ${submittedBrief.data.fullName}
+Osoba kontaktowa: ${submittedBrief.data.fullName}
 E-mail: ${submittedBrief.data.email}
 Gatunek: ${submittedBrief.data.genre}
-Pakiet: ${submittedBrief.data.productionPackage}
 Link do utworu: ${submittedBrief.data.demoLink}
-Budżet orientacyjny: ${submittedBrief.data.estimatedBudget || 'Do ustalenia'}
-Termin realizacji: ${submittedBrief.data.targetDeadline || 'Do ustalenia'}
 Opis koncepcji:
 ${submittedBrief.data.conceptDescription}
 Adres docelowy: dreamstudiopl@gmail.com
@@ -233,9 +219,6 @@ Adres docelowy: dreamstudiopl@gmail.com
       artistName: '',
       genre: '',
       demoLink: '',
-      productionPackage: 'MASH AI MUSIC VIDEO',
-      estimatedBudget: '',
-      targetDeadline: '',
       conceptDescription: '',
       acceptedPrivacy: false,
     });
@@ -314,8 +297,8 @@ Adres docelowy: dreamstudiopl@gmail.com
                       <span className="text-white font-medium">{submittedBrief.data.artistName}</span>
                     </div>
                     <div>
-                      <span className="text-[#777777] block">Pakiet:</span>
-                      <span className="text-white font-medium">{submittedBrief.data.productionPackage}</span>
+                      <span className="text-[#777777] block">Osoba kontaktowa:</span>
+                      <span className="text-white font-medium">{submittedBrief.data.fullName}</span>
                     </div>
                     <div>
                       <span className="text-[#777777] block">E-mail:</span>
@@ -499,72 +482,6 @@ Adres docelowy: dreamstudiopl@gmail.com
                       {errors.demoLink}
                     </span>
                   )}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {/* Production Package */}
-                  <div className="space-y-1.5 sm:col-span-1">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.productionPackage}
-                    </label>
-                    <select
-                      value={formData.productionPackage}
-                      onChange={(e) => setFormData({ ...formData, productionPackage: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
-                    >
-                      {formData.productionPackage &&
-                        !['MASH AI MUSIC VIDEO', 'MASH GREEN SCREEN PRODUCTION', 'MASH AI VIDEO CONCEPT', 'MASH CINEMATIC EXPERIENCE', 'MASH VISUAL CONTENT', 'Inny projekt indywidualny'].includes(formData.productionPackage) && (
-                          <option value={formData.productionPackage}>
-                            {formData.productionPackage}
-                          </option>
-                        )}
-                      <option value="MASH AI MUSIC VIDEO">MASH AI Music Video</option>
-                      <option value="MASH GREEN SCREEN PRODUCTION">MASH Green Screen Production</option>
-                      <option value="MASH AI VIDEO CONCEPT">MASH AI Video Concept</option>
-                      <option value="MASH CINEMATIC EXPERIENCE">MASH Cinematic Experience</option>
-                      <option value="MASH VISUAL CONTENT">MASH Visual Content</option>
-                      <option value="Inny projekt indywidualny">Inny projekt indywidualny</option>
-                    </select>
-                  </div>
-
-                  {/* Estimated Budget Range (Optional) */}
-                  <div className="space-y-1.5 sm:col-span-1">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.estimatedBudget}
-                    </label>
-                    <select
-                      value={formData.estimatedBudget}
-                      onChange={(e) => setFormData({ ...formData, estimatedBudget: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white focus:outline-none focus:border-[#555555] transition-colors"
-                    >
-                      {formData.estimatedBudget &&
-                        !['', '5 000 - 10 000 PLN', '10 000 - 20 000 PLN', '20 000 - 40 000 PLN', '40 000+ PLN', 'Do uzgodnienia / elastyczny'].includes(formData.estimatedBudget) && (
-                          <option value={formData.estimatedBudget}>
-                            {formData.estimatedBudget} (Z kalkulatora)
-                          </option>
-                        )}
-                      <option value="">Wybierz przedział (opcjonalnie)...</option>
-                      <option value="5 000 - 10 000 PLN">5 000 – 10 000 PLN</option>
-                      <option value="10 000 - 20 000 PLN">10 000 – 20 000 PLN</option>
-                      <option value="20 000 - 40 000 PLN">20 000 – 40 000 PLN</option>
-                      <option value="40 000+ PLN">Powyżej 40 000 PLN</option>
-                      <option value="Do uzgodnienia / elastyczny">Do uzgodnienia / elastyczny</option>
-                    </select>
-                  </div>
-
-                  {/* Target Deadline */}
-                  <div className="space-y-1.5 sm:col-span-1">
-                    <label className="text-xs font-mono uppercase text-[#e0e0e0] block">
-                      {copy.contact.form.targetDeadline}
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.targetDeadline}
-                      onChange={(e) => setFormData({ ...formData, targetDeadline: e.target.value })}
-                      placeholder={copy.contact.form.targetDeadlinePlaceholder}
-                      className="w-full px-4 py-3 rounded-lg bg-[#181818] border border-[#2a2a2a] text-base sm:text-sm text-white placeholder-[#555555] focus:outline-none focus:border-[#555555] transition-colors"
-                    />
-                  </div>
                 </div>
 
                 {/* Concept Description */}
